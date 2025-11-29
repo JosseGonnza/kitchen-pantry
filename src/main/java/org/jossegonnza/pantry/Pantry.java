@@ -12,13 +12,17 @@ public class Pantry {
     }
 
     public void deleteProduct(String productName) {
-        products.removeIf(p -> p.getName().equals(productName));
+        products.removeIf(product -> isEquals(productName, product));
     }
 
     private boolean hasProduct(String productName) {
         return products
                 .stream()
-                .anyMatch(p -> p.getName().equals(productName));
+                .anyMatch(product -> isEquals(productName, product));
+    }
+
+    private static boolean isEquals(String productName, Product product) {
+        return product.getName().equals(productName);
     }
 
     public List<Product> getProducts() {
