@@ -8,10 +8,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PantryTest {
     @Test
-    void shouldAddNewProductToEmptyPantry() {
+    void shouldAddProductNewProductToEmptyPantry() {
         Pantry pantry = new Pantry();
 
-        pantry.add("Rice");
+        pantry.addProduct("Rice");
         List<Product> products = pantry.getProducts();
 
         assertEquals(1, products.size());
@@ -19,11 +19,11 @@ public class PantryTest {
     }
 
     @Test
-    void shouldNotAddADuplicateProduct() {
+    void shouldNotAddProductADuplicateProduct() {
         Pantry pantry = new Pantry();
-        pantry.add("Rice");
+        pantry.addProduct("Rice");
 
-        pantry.add("Rice");
+        pantry.addProduct("Rice");
         List<Product> products = pantry.getProducts();
 
         assertEquals(1, products.size());
