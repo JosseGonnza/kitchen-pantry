@@ -28,4 +28,15 @@ public class PantryTest {
 
         assertEquals(1, products.size());
     }
+
+    @Test
+    void shouldDeleteProductProductWhenItExistsInPantry() {
+        Pantry pantry = new Pantry();
+        pantry.addProduct("Rice");
+
+        pantry.deleteProduct("Rice");
+        List<Product> products = pantry.getProducts();
+
+        assertEquals(0, products.size());
+    }
 }
