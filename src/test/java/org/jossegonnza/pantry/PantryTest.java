@@ -17,4 +17,15 @@ public class PantryTest {
         assertEquals(1, products.size());
         assertEquals("Rice", products.get(0).getName());
     }
+
+    @Test
+    void shouldNotAddADuplicateProduct() {
+        Pantry pantry = new Pantry();
+        pantry.add("Rice");
+
+        pantry.add("Rice");
+        List<Product> products = pantry.getProducts();
+
+        assertEquals(1, products.size());
+    }
 }
