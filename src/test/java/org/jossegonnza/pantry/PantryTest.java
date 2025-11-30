@@ -54,4 +54,14 @@ public class PantryTest {
         assertEquals("Rice", product.get().getName());
     }
 
+    @Test
+    void shouldReturnEmptyWhenProductDoesNotExist() {
+        Pantry pantry = new Pantry();
+        pantry.addProduct("Rice");
+
+        Optional<Product> product = pantry.findByName("Pasta");
+
+        assertTrue(product.isEmpty());
+    }
+
 }
