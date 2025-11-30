@@ -89,4 +89,15 @@ public class PantryTest {
         assertEquals("Rice", products.get(0).getName());
         assertEquals("Pasta", products.get(1).getName());
     }
+
+    @Test
+    void shouldReturnEmptyListWhenNoProductsMatchCategory() {
+        Pantry pantry = new Pantry();
+        pantry.addProduct("Rice", Category.GRAINS);
+
+        List<Product> cleaningProducts = pantry.getProductsByCategory(Category.CLEANING);
+
+        assertTrue(cleaningProducts.isEmpty());
+    }
+
 }
