@@ -74,4 +74,19 @@ public class PantryTest {
 
         assertEquals(Category.GRAINS, rice.getCategory());
     }
+
+    @Test
+    void shouldReturnOnlyProductsFromRequestedCategory() {
+        Pantry pantry = new Pantry();
+        pantry.addProduct("Rice", Category.GRAINS);
+        pantry.addProduct("Pasta", Category.GRAINS);
+        pantry.addProduct("Chicken", Category.MEAT);
+        pantry.addProduct("Soap", Category.CLEANING);
+
+        List<Product> products = pantry.getProductsByCategory(Category.GRAINS);
+
+        assertEquals(2, products.size());
+        assertEquals("Rice", products.get(0).getName());
+        assertEquals("Pasta", products.get(1).getName());
+    }
 }

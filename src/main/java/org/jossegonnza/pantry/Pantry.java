@@ -27,6 +27,13 @@ public class Pantry {
                 .findFirst();
     }
 
+    public List<Product> getProductsByCategory(Category category) {
+        return products
+                .stream()
+                .filter(product -> product.getCategory() == category)
+                .toList();
+    }
+
     private boolean hasProduct(String productName) {
         return products
                 .stream()
