@@ -2,6 +2,7 @@ package org.jossegonnza.pantry;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Pantry {
     private final List<Product> products = new ArrayList<>();
@@ -13,6 +14,13 @@ public class Pantry {
 
     public void deleteProduct(String productName) {
         products.removeIf(product -> isEquals(productName, product));
+    }
+
+    public Optional<Product> findByName(String productName) {
+        return products
+                .stream()
+                .filter(product -> isEquals(productName, product))
+                .findFirst();
     }
 
     private boolean hasProduct(String productName) {
