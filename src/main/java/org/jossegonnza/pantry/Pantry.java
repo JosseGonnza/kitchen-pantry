@@ -7,9 +7,13 @@ import java.util.Optional;
 public class Pantry {
     private final List<Product> products = new ArrayList<>();
 
-    public void addProduct(String productName) {
+    public void addProduct(String productName, Category category) {
         boolean productAlreadyExists = hasProduct(productName);
-        if (!productAlreadyExists) products.add(new Product(productName));
+        if (!productAlreadyExists) products.add(new Product(productName, category));
+    }
+
+    public void addProduct(String name) {
+        addProduct(name, Category.OTHER);
     }
 
     public void deleteProduct(String productName) {

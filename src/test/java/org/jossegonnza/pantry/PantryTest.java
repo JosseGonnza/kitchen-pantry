@@ -64,4 +64,14 @@ public class PantryTest {
         assertTrue(product.isEmpty());
     }
 
+    @Test
+    void shouldStoreCategoryWhenAddingProduct() {
+        Pantry pantry = new Pantry();
+        pantry.addProduct("Rice", Category.GRAINS);
+
+        Product rice = pantry.findByName("Rice")
+                .orElseThrow(() -> new AssertionError("Product 'Rice' should exist"));
+
+        assertEquals(Category.GRAINS, rice.getCategory());
+    }
 }
