@@ -1,4 +1,4 @@
-package org.jossegonnza.kitchenpantry;
+package org.jossegonnza.kitchenpantry.domain;
 
 public class Product {
     private final String name;

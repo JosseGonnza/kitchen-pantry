@@ -1,5 +1,6 @@
-package org.jossegonnza.kitchenpantry;
+package org.jossegonnza.kitchenpantry.domain;
 
+import org.jossegonnza.kitchenpantry.domain.exception.ProductNotFoundException;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

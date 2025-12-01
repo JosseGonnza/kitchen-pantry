@@ -1,4 +1,4 @@
-package org.jossegonnza.kitchenpantry;
+package org.jossegonnza.kitchenpantry.domain;
 
 public enum Category {
     GRAINS,

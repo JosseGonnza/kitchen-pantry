@@ -1,4 +1,4 @@
-package org.jossegonnza.kitchenpantry;
+package org.jossegonnza.kitchenpantry.domain;
 
 import org.junit.jupiter.api.Test;
 
