@@ -1,4 +1,4 @@
-package org.jossegonnza.pantry;
+package org.jossegonnza.kitchenpantry;
 
 public class DuplicateProductException extends RuntimeException {
     public DuplicateProductException(String productName) {

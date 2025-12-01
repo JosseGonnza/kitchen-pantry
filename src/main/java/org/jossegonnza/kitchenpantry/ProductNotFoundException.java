@@ -1,4 +1,4 @@
-package org.jossegonnza.pantry;
+package org.jossegonnza.kitchenpantry;
 
 public class ProductNotFoundException extends RuntimeException {
     public ProductNotFoundException(String productName) {

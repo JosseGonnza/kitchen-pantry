@@ -1,4 +1,4 @@
-package org.jossegonnza.pantry;
+package org.jossegonnza.kitchenpantry;
 
 import java.util.ArrayList;
 import java.util.List;
