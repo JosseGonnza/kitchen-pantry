@@ -9,7 +9,11 @@ public class Pantry {
 
     public void addProduct(String productName, Category category) {
         boolean productAlreadyExists = hasProduct(productName);
-        if (!productAlreadyExists) products.add(new Product(productName, category));
+        if (productAlreadyExists) {
+            throw new DuplicateProductException(productName);
+        } else {
+            products.add(new Product(productName, category));
+        }
     }
 
     public void addProduct(String name) {

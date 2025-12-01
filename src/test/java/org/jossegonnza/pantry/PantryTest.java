@@ -20,14 +20,21 @@ public class PantryTest {
     }
 
     @Test
-    void shouldNotAddProductADuplicateProduct() {
+    void shouldThrowWhenAddingProductWithExistingName() {
         Pantry pantry = new Pantry();
-        pantry.addProduct("Rice");
+        pantry.addProduct("Rice", Category.GRAINS);
 
-        pantry.addProduct("Rice");
-        List<Product> products = pantry.getProducts();
+        assertThrows(DuplicateProductException.class,
+                () -> pantry.addProduct("Rice", Category.GRAINS));
+    }
 
-        assertEquals(1, products.size());
+    @Test
+    void shouldNotAllowSameNameWithDifferentCategory() {
+        Pantry pantry = new Pantry();
+        pantry.addProduct("Rice", Category.GRAINS);
+
+        assertThrows(DuplicateProductException.class,
+                () -> pantry.addProduct("Rice", Category.CLEANING));
     }
 
     @Test
