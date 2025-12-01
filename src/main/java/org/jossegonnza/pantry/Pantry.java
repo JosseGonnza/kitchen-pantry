@@ -21,15 +21,19 @@ public class Pantry {
     }
 
     public void deleteProduct(String productName) {
-        boolean removed = products.removeIf(product -> isEquals(productName, product));
+        boolean removed = products.removeIf(product -> hasName(productName, product));
         if (!removed) throw new ProductNotFoundException(productName);
     }
 
     public Optional<Product> findByName(String productName) {
         return products
                 .stream()
-                .filter(product -> isEquals(productName, product))
+                .filter(product -> hasName(productName, product))
                 .findFirst();
+    }
+
+    public List<Product> getProducts() {
+        return List.copyOf(products);
     }
 
     public List<Product> getProductsByCategory(Category category) {
@@ -40,16 +44,10 @@ public class Pantry {
     }
 
     private boolean hasProduct(String productName) {
-        return products
-                .stream()
-                .anyMatch(product -> isEquals(productName, product));
+        return findByName(productName).isPresent();
     }
 
-    private static boolean isEquals(String productName, Product product) {
+    private static boolean hasName(String productName, Product product) {
         return product.getName().equals(productName);
-    }
-
-    public List<Product> getProducts() {
-        return this.products;
     }
 }
