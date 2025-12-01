@@ -17,7 +17,8 @@ public class Pantry {
     }
 
     public void deleteProduct(String productName) {
-        products.removeIf(product -> isEquals(productName, product));
+        boolean removed = products.removeIf(product -> isEquals(productName, product));
+        if (!removed) throw new ProductNotFoundException(productName);
     }
 
     public Optional<Product> findByName(String productName) {
