@@ -81,4 +81,17 @@ public class ProductQuantityTest {
         assertThrows(ProductNotFoundException.class,
                 () -> pantry.decreaseQuantity("Rice", 3));
     }
+
+    @Test
+    void shouldNotAllowNonPositiveDecrease() {
+        Pantry pantry = new Pantry();
+        pantry.addProduct("Rice", Category.GRAINS);
+        pantry.increaseQuantity("Rice", 10);
+
+        assertThrows(IllegalArgumentException.class,
+                () -> pantry.decreaseQuantity("Rice", 0));
+        assertThrows(IllegalArgumentException.class,
+                () -> pantry.decreaseQuantity("Rice", -3));
+    }
+
 }

@@ -31,6 +31,9 @@ public class Product {
     }
 
     public void decreaseQuantity(int amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Amount to increase must be positive");
+        }
         if (amount > this.quantity) {
             throw new InsufficientStockException(this.name);
         }
