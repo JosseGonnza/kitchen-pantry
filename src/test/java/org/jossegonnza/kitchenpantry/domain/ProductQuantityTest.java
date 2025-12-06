@@ -63,4 +63,14 @@ public class ProductQuantityTest {
 
         assertEquals(5, rice.getQuantity());
     }
+
+    @Test
+    void shouldNotAllowQuantityDecreaseBelowZero() {
+        Pantry pantry = new Pantry();
+        pantry.addProduct("Rice", Category.GRAINS);
+        pantry.increaseQuantity("Rice", 1);
+
+        assertThrows(InsufficientStockException.class,
+                () -> pantry.decreaseQuantity("Rice", 5));
+    }
 }
