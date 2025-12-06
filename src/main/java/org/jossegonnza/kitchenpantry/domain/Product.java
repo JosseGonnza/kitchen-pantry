@@ -24,6 +24,9 @@ public class Product {
     }
 
     public void increaseQuantity(int amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Amount to increase must be positive");
+        }
         this.quantity += amount;
     }
 }

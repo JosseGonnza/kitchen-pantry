@@ -54,7 +54,7 @@ public class Pantry {
         return product.getName().equals(productName);
     }
 
-    public void increseQuantity(String productName, int amount) {
+    public void increaseQuantity(String productName, int amount) {
         Product product = findByName(productName)
                 .orElseThrow(() -> new ProductNotFoundException(productName));
         product.increaseQuantity(amount);

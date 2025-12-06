@@ -3,6 +3,7 @@ package org.jossegonnza.kitchenpantry.domain;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ProductQuantityTest {
     @Test
@@ -21,11 +22,22 @@ public class ProductQuantityTest {
         Pantry pantry = new Pantry();
         pantry.addProduct("Rice", Category.GRAINS);
 
-        pantry.increseQuantity("Rice", 5);
+        pantry.increaseQuantity("Rice", 5);
 
         Product rice = pantry.findByName("Rice")
                 .orElseThrow(() -> new AssertionError("Product 'Rice' should exist"));
 
         assertEquals(5, rice.getQuantity());
+    }
+
+    @Test
+    void shouldNotAllowNonPositiveIncrease() {
+        Pantry pantry = new Pantry();
+        pantry.addProduct("Rice", Category.GRAINS);
+
+        assertThrows(IllegalArgumentException.class,
+                () -> pantry.increaseQuantity("Rice", 0));
+        assertThrows(IllegalArgumentException.class,
+                () -> pantry.increaseQuantity("Rice", -3));
     }
 }
