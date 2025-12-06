@@ -29,4 +29,8 @@ public class Product {
         }
         this.quantity += amount;
     }
+
+    public void decreaseQuantity(int amount) {
+        this.quantity -= amount;
+    }
 }

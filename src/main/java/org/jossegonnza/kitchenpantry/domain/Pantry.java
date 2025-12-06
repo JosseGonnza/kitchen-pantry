@@ -59,4 +59,10 @@ public class Pantry {
                 .orElseThrow(() -> new ProductNotFoundException(productName));
         product.increaseQuantity(amount);
     }
+
+    public void decreaseQuantity(String productName, int amount) {
+        Product product = findByName(productName)
+                .orElseThrow(() -> new ProductNotFoundException(productName));
+        product.decreaseQuantity(amount);
+    }
 }

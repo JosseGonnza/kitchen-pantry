@@ -49,4 +49,18 @@ public class ProductQuantityTest {
         assertThrows(ProductNotFoundException.class,
                 () -> pantry.increaseQuantity("Rice", 3));
     }
+
+    @Test
+    void shouldDecreaseProductQuantity() {
+        Pantry pantry = new Pantry();
+        pantry.addProduct("Rice", Category.GRAINS);
+
+        pantry.increaseQuantity("Rice", 10);
+        pantry.decreaseQuantity("Rice", 5);
+        Product rice = pantry.findByName("Rice")
+                .orElseThrow(() -> new AssertionError("Product 'Rice' should exist"));
+
+
+        assertEquals(5, rice.getQuantity());
+    }
 }
