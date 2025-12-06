@@ -1,5 +1,6 @@
 package org.jossegonnza.kitchenpantry.domain;
 
+import org.jossegonnza.kitchenpantry.domain.exception.ProductNotFoundException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -39,5 +40,13 @@ public class ProductQuantityTest {
                 () -> pantry.increaseQuantity("Rice", 0));
         assertThrows(IllegalArgumentException.class,
                 () -> pantry.increaseQuantity("Rice", -3));
+    }
+
+    @Test
+    void shouldThrowWhenIncreasingQuantityOfNonExistingProduct() {
+        Pantry pantry = new Pantry();
+
+        assertThrows(ProductNotFoundException.class,
+                () -> pantry.increaseQuantity("Rice", 3));
     }
 }
