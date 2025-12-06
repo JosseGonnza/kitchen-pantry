@@ -3,6 +3,7 @@ package org.jossegonnza.kitchenpantry.domain;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class QuantityTest {
     @Test
@@ -12,5 +13,20 @@ public class QuantityTest {
 
         assertEquals(0, zero.value());
         assertEquals(5, five.value());
+    }
+
+    @Test
+    void shouldNotAllowNegativeInitialValue() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new Quantity(-1));
+    }
+
+    @Test
+    void shouldIncreaseQuantityByPositiveAmount() {
+        Quantity quantity = new Quantity(5);
+
+        Quantity result = quantity.add(3);
+
+        assertEquals(8, result.value());
     }
 }
