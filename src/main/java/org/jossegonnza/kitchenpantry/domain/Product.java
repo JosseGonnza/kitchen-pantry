@@ -1,5 +1,7 @@
 package org.jossegonnza.kitchenpantry.domain;
 
+import org.jossegonnza.kitchenpantry.domain.exception.InsufficientStockException;
+
 public class Product {
     private final String name;
     private final Category category;
@@ -35,7 +37,7 @@ public class Product {
             throw new IllegalArgumentException("Amount to increase must be positive");
         }
         if (amount > this.quantity) {
-            throw new InsufficientStockException(this.name);
+            throw new InsufficientStockException(this.name, amount, this.quantity);
         }
         this.quantity -= amount;
     }
