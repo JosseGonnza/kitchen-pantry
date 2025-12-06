@@ -73,4 +73,12 @@ public class ProductQuantityTest {
         assertThrows(InsufficientStockException.class,
                 () -> pantry.decreaseQuantity("Rice", 5));
     }
+
+    @Test
+    void shouldThrowWhenDecreasingQuantityOfNonExistingProduct() {
+        Pantry pantry = new Pantry();
+
+        assertThrows(ProductNotFoundException.class,
+                () -> pantry.decreaseQuantity("Rice", 3));
+    }
 }
