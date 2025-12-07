@@ -32,4 +32,8 @@ public class Quantity {
         }
         return new Quantity(this.value - amount);
     }
+
+    public static Quantity zero() {
+        return new Quantity(0);
+    }
 }

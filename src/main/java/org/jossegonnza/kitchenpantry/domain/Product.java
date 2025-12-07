@@ -6,10 +6,12 @@ public class Product {
     private final String name;
     private final Category category;
     private int quantity;
+    private Quantity quantity2;
 
     public Product(String name, Category category) {
         this.name = name;
         this.category = category;
+        this.quantity2 = Quantity.zero();
         this.quantity = 0;
     }
 
@@ -25,11 +27,22 @@ public class Product {
         return this.quantity;
     }
 
+    public int getQuantity2() {
+        return quantity2.value();
+    }
+
     public void increaseQuantity(int amount) {
         if (amount <= 0) {
             throw new IllegalArgumentException("Amount to increase must be positive");
         }
         this.quantity += amount;
+    }
+
+    public void increaseQuantity2(int amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Amount to increase must be positive");
+        }
+        this.quantity2 = this.quantity2.add(amount);
     }
 
     public void decreaseQuantity(int amount) {
@@ -40,5 +53,15 @@ public class Product {
             throw new InsufficientStockException(this.name, amount, this.quantity);
         }
         this.quantity -= amount;
+    }
+
+    public void decreaseQuantity2(int amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Amount to increase must be positive");
+        }
+        if (amount > this.quantity) {
+            throw new InsufficientStockException(this.name, amount, this.quantity);
+        }
+        this.quantity2 = this.quantity2.subtract(amount);
     }
 }
