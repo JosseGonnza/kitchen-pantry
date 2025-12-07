@@ -20,4 +20,8 @@ public class Quantity {
         }
         return new Quantity(this.value + amount);
     }
+
+    public Quantity subtract(int amount) {
+        return new Quantity(this.value - amount);
+    }
 }

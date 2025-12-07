@@ -39,4 +39,13 @@ public class QuantityTest {
         assertThrows(IllegalArgumentException.class,
                 () -> quantity.add(-2));
     }
+
+    @Test
+    void shouldDecreaseQuantityByPositiveAmount() {
+        Quantity quantity = new Quantity(10);
+
+        Quantity result = quantity.subtract(4);
+
+        assertEquals(6, result.value());
+    }
 }
