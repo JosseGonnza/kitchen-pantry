@@ -15,6 +15,9 @@ public class Quantity {
     }
 
     public Quantity add(int amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Amount to increase must be positive");
+        }
         return new Quantity(this.value + amount);
     }
 }

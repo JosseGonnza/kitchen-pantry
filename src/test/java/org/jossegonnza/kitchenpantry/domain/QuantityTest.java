@@ -29,4 +29,14 @@ public class QuantityTest {
 
         assertEquals(8, result.value());
     }
+
+    @Test
+    void shouldNotAllowNonPositiveIncrease() {
+        Quantity quantity = new Quantity(5);
+
+        assertThrows(IllegalArgumentException.class,
+                () -> quantity.add(0));
+        assertThrows(IllegalArgumentException.class,
+                () -> quantity.add(-2));
+    }
 }
