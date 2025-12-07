@@ -5,14 +5,12 @@ import org.jossegonnza.kitchenpantry.domain.exception.InsufficientStockException
 public class Product {
     private final String name;
     private final Category category;
-    private int quantity;
-    private Quantity quantity2;
+    private Quantity quantity;
 
     public Product(String name, Category category) {
         this.name = name;
         this.category = category;
-        this.quantity2 = Quantity.zero();
-        this.quantity = 0;
+        this.quantity = Quantity.zero();
     }
 
     public String getName() {
@@ -24,44 +22,23 @@ public class Product {
     }
 
     public int getQuantity() {
-        return this.quantity;
-    }
-
-    public int getQuantity2() {
-        return quantity2.value();
+        return quantity.value();
     }
 
     public void increaseQuantity(int amount) {
         if (amount <= 0) {
             throw new IllegalArgumentException("Amount to increase must be positive");
         }
-        this.quantity += amount;
-    }
-
-    public void increaseQuantity2(int amount) {
-        if (amount <= 0) {
-            throw new IllegalArgumentException("Amount to increase must be positive");
-        }
-        this.quantity2 = this.quantity2.add(amount);
+        this.quantity = this.quantity.add(amount);
     }
 
     public void decreaseQuantity(int amount) {
         if (amount <= 0) {
             throw new IllegalArgumentException("Amount to increase must be positive");
         }
-        if (amount > this.quantity) {
-            throw new InsufficientStockException(this.name, amount, this.quantity);
+        if (amount > this.quantity.value()) {
+            throw new InsufficientStockException(this.name, amount, this.quantity.value());
         }
-        this.quantity -= amount;
-    }
-
-    public void decreaseQuantity2(int amount) {
-        if (amount <= 0) {
-            throw new IllegalArgumentException("Amount to increase must be positive");
-        }
-        if (amount > this.quantity) {
-            throw new InsufficientStockException(this.name, amount, this.quantity);
-        }
-        this.quantity2 = this.quantity2.subtract(amount);
+        this.quantity = this.quantity.subtract(amount);
     }
 }
