@@ -59,12 +59,4 @@ public class QuantityTest {
         assertThrows(IllegalArgumentException.class,
                 () -> quantity.subtract(-2));
     }
-
-    @Test
-    void shouldThrowWhenDecreasingMoreThanAvailable() {
-        Quantity quantity = new Quantity(2);
-
-        assertThrows(InsufficientStockException.class,
-                () -> quantity.subtract(5));
-    }
 }

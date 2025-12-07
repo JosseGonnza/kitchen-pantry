@@ -26,18 +26,12 @@ public class Product {
     }
 
     public void increaseQuantity(int amount) {
-        if (amount <= 0) {
-            throw new IllegalArgumentException("Amount to increase must be positive");
-        }
         this.quantity = this.quantity.add(amount);
     }
 
     public void decreaseQuantity(int amount) {
-        if (amount <= 0) {
-            throw new IllegalArgumentException("Amount to increase must be positive");
-        }
-        if (amount > this.quantity.value()) {
-            throw new InsufficientStockException(this.name, amount, this.quantity.value());
+        if (amount > quantity.value()) {
+            throw new InsufficientStockException(name, amount, this.quantity.value());
         }
         this.quantity = this.quantity.subtract(amount);
     }
