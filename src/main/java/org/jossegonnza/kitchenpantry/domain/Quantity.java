@@ -22,6 +22,9 @@ public class Quantity {
     }
 
     public Quantity subtract(int amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Amount to decrease must be positive");
+        }
         return new Quantity(this.value - amount);
     }
 }

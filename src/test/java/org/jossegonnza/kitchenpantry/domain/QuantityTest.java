@@ -48,4 +48,14 @@ public class QuantityTest {
 
         assertEquals(6, result.value());
     }
+
+    @Test
+    void shouldNotAllowNonPositiveDecrease() {
+        Quantity quantity = new Quantity(5);
+
+        assertThrows(IllegalArgumentException.class,
+                () -> quantity.subtract(0));
+        assertThrows(IllegalArgumentException.class,
+                () -> quantity.subtract(-2));
+    }
 }
