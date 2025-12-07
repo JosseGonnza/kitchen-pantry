@@ -1,5 +1,6 @@
 package org.jossegonnza.kitchenpantry.domain;
 
+import org.jossegonnza.kitchenpantry.domain.exception.InsufficientStockException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -57,5 +58,13 @@ public class QuantityTest {
                 () -> quantity.subtract(0));
         assertThrows(IllegalArgumentException.class,
                 () -> quantity.subtract(-2));
+    }
+
+    @Test
+    void shouldThrowWhenDecreasingMoreThanAvailable() {
+        Quantity quantity = new Quantity(2);
+
+        assertThrows(InsufficientStockException.class,
+                () -> quantity.subtract(5));
     }
 }

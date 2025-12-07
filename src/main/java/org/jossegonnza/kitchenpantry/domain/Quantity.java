@@ -1,5 +1,7 @@
 package org.jossegonnza.kitchenpantry.domain;
 
+import org.jossegonnza.kitchenpantry.domain.exception.InsufficientStockException;
+
 public class Quantity {
     private int value;
 
@@ -24,6 +26,9 @@ public class Quantity {
     public Quantity subtract(int amount) {
         if (amount <= 0) {
             throw new IllegalArgumentException("Amount to decrease must be positive");
+        }
+        if (amount > this.value) {
+            throw new InsufficientStockException("Unknow product", amount, this.value);
         }
         return new Quantity(this.value - amount);
     }
