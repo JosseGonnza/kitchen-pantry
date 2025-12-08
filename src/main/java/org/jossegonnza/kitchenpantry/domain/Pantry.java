@@ -12,6 +12,7 @@ public class Pantry {
     private final List<Product> products = new ArrayList<>();
     private final List<Batch> batches = new ArrayList<>();
 
+    // Products
     public void addProduct(String productName, Category category) {
         boolean productAlreadyExists = hasProduct(productName);
         if (productAlreadyExists) {
@@ -48,14 +49,6 @@ public class Pantry {
                 .toList();
     }
 
-    private boolean hasProduct(String productName) {
-        return findByName(productName).isPresent();
-    }
-
-    private static boolean hasName(String productName, Product product) {
-        return product.getName().equals(productName);
-    }
-
     public void increaseQuantity(String productName, int amount) {
         Product product = findByName(productName)
                 .orElseThrow(() -> new ProductNotFoundException(productName));
@@ -68,9 +61,14 @@ public class Pantry {
         product.decreaseQuantity(amount);
     }
 
+
+    // Batches
     public void addBatch(String productName, int amount, LocalDate expiryDate) {
         Product product = findByName(productName)
                 .orElseThrow(() -> new ProductNotFoundException(productName));
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Batch amount must be positive");
+        }
         Batch batch = new Batch(productName, new Quantity(amount), expiryDate);
 
         batches.add(batch);
@@ -80,5 +78,14 @@ public class Pantry {
         return batches.stream()
                 .filter(batch -> batch.productName().equals(productName))
                 .toList();
+    }
+
+    // Helpers
+    private boolean hasProduct(String productName) {
+        return findByName(productName).isPresent();
+    }
+
+    private static boolean hasName(String productName, Product product) {
+        return product.getName().equals(productName);
     }
 }
