@@ -31,4 +31,15 @@ public class BatchTest {
         assertThrows(ProductNotFoundException.class,
                 () -> pantry.addBatch("Rice", 5, LocalDate.of(2025, 12, 31)));
     }
+
+    @Test
+    void shouldNotAllowNonPositiveBatchAmount() {
+        Pantry pantry = new Pantry();
+        pantry.addProduct("Rice", Category.GRAINS);
+
+        assertThrows(IllegalArgumentException.class,
+                () -> pantry.addBatch("Rice", 0, LocalDate.of(2025, 12, 31)));
+        assertThrows(IllegalArgumentException.class,
+                () -> pantry.addBatch("Rice", -3, LocalDate.of(2025, 12, 31)));
+    }
 }
