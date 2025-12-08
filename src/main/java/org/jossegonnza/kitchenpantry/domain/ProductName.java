@@ -13,4 +13,21 @@ public class ProductName {
     public String value() {
         return value;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        ProductName name = (ProductName) o;
+        return value.equalsIgnoreCase(name.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return value.toLowerCase().hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return value;
+    }
 }

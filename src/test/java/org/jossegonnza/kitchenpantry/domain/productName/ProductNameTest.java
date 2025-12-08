@@ -28,4 +28,15 @@ public class ProductNameTest {
         assertThrows(IllegalArgumentException.class,
                 () -> new ProductName(" "));
     }
+
+    @Test
+    void shouldBeCaseSensitiveWhenComparingNames() {
+        ProductName riceUpper = new ProductName("RICE");
+        ProductName riceLower = new ProductName("rice");
+        ProductName riceMixed = new ProductName("  rIcE  ");
+
+        assertEquals(riceUpper, riceLower);
+        assertEquals(riceLower, riceMixed);
+        assertEquals(riceMixed, riceUpper);
+    }
 }
