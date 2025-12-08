@@ -3,12 +3,14 @@ package org.jossegonnza.kitchenpantry.domain;
 import org.jossegonnza.kitchenpantry.domain.exception.DuplicateProductException;
 import org.jossegonnza.kitchenpantry.domain.exception.ProductNotFoundException;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class Pantry {
     private final List<Product> products = new ArrayList<>();
+    private final List<Batch> batches = new ArrayList<>();
 
     public void addProduct(String productName, Category category) {
         boolean productAlreadyExists = hasProduct(productName);
@@ -64,5 +66,19 @@ public class Pantry {
         Product product = findByName(productName)
                 .orElseThrow(() -> new ProductNotFoundException(productName));
         product.decreaseQuantity(amount);
+    }
+
+    public void addBatch(String productName, int amount, LocalDate expiryDate) {
+        Product product = findByName(productName)
+                .orElseThrow(() -> new ProductNotFoundException(productName));
+        Batch batch = new Batch(productName, new Quantity(amount), expiryDate);
+
+        batches.add(batch);
+    }
+
+    public List<Batch> getBatches(String productName) {
+        return batches.stream()
+                .filter(batch -> batch.productName().equals(productName))
+                .toList();
     }
 }
