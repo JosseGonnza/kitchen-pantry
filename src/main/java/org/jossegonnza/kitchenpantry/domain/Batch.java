@@ -4,26 +4,26 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Batch {
-    private final String productName;
+    private final ProductName productName;
     private final Quantity quantity;
     private final LocalDate expiryDate;
 
-    public Batch(String productName, Quantity quantity, LocalDate expiryDate) {
-        if (productName == null || productName.isEmpty()) {
-            throw new IllegalArgumentException("Product name cannot be null or empty");
+    public Batch(ProductName productName, Quantity quantity, LocalDate expiryDate) {
+        if (productName == null) {
+            throw new IllegalArgumentException("Product name cannot be null");
         }
         if (quantity == null) {
             throw new IllegalArgumentException("Quantity cannot be null");
         }
         if (expiryDate == null) {
-            throw new IllegalArgumentException("Quantity cannot be null");
+            throw new IllegalArgumentException("Expiry date cannot be null");
         }
         this.productName = productName;
         this.quantity = quantity;
         this.expiryDate = expiryDate;
     }
 
-    public String productName() {
+    public ProductName productName() {
         return productName;
     }
 

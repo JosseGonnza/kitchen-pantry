@@ -13,12 +13,12 @@ public class Pantry {
     private final List<Batch> batches = new ArrayList<>();
 
     // Products
-    public void addProduct(String productName, Category category) {
-        boolean productAlreadyExists = hasProduct(productName);
+    public void addProduct(String name, Category category) {
+        boolean productAlreadyExists = hasProduct(name);
         if (productAlreadyExists) {
-            throw new DuplicateProductException(productName);
+            throw new DuplicateProductException(name);
         } else {
-            products.add(new Product(productName, category));
+            products.add(new Product(name, category));
         }
     }
 
@@ -27,14 +27,14 @@ public class Pantry {
     }
 
     public void deleteProduct(String productName) {
-        boolean removed = products.removeIf(product -> hasName(productName, product));
+        boolean removed = products.removeIf(product -> product.hasName(productName));
         if (!removed) throw new ProductNotFoundException(productName);
     }
 
     public Optional<Product> findByName(String productName) {
         return products
                 .stream()
-                .filter(product -> hasName(productName, product))
+                .filter(product -> product.hasName(productName))
                 .findFirst();
     }
 
@@ -69,20 +69,20 @@ public class Pantry {
         if (amount <= 0) {
             throw new IllegalArgumentException("Batch amount must be positive");
         }
-        Batch batch = new Batch(productName, new Quantity(amount), expiryDate);
+        Batch batch = new Batch(product.getProductName(), new Quantity(amount), expiryDate);
 
         batches.add(batch);
     }
 
-    public List<Batch> getBatches(String productName) {
+    public List<Batch> getBatches(String name) {
         return batches.stream()
-                .filter(batch -> batch.productName().equals(productName))
+                .filter(batch -> batch.productName().equals(new ProductName(name)))
                 .toList();
     }
 
-    public int getTotalQuantityFromBatches(String productName) {
+    public int getTotalQuantityFromBatches(String name) {
         return batches.stream()
-                .filter(batch -> batch.productName().equals(productName))
+                .filter(batch -> batch.productName().equals(new ProductName(name)))
                 .mapToInt(batch -> batch.quantity().value())
                 .sum();
     }
@@ -90,9 +90,5 @@ public class Pantry {
     // Helpers
     private boolean hasProduct(String productName) {
         return findByName(productName).isPresent();
-    }
-
-    private static boolean hasName(String productName, Product product) {
-        return product.getName().equals(productName);
     }
 }
