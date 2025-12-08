@@ -4,7 +4,7 @@ public class ProductName {
     private final String name;
 
     public ProductName(String name) {
-        this.name = name;
+        this.name = name.trim();
     }
 
     public String value() {

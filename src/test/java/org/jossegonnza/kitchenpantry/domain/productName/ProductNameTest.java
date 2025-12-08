@@ -12,4 +12,11 @@ public class ProductNameTest {
 
         assertEquals("Rice", name.value());
     }
+
+    @Test
+    void shouldTrimValue() {
+        ProductName name = new ProductName("   Rice   ");
+
+        assertEquals("Rice", name.value());
+    }
 }
