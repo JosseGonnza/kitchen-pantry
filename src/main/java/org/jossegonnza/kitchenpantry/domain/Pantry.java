@@ -80,6 +80,13 @@ public class Pantry {
                 .toList();
     }
 
+    public int getTotalQuantityFromBatches(String productName) {
+        return batches.stream()
+                .filter(batch -> batch.productName().equals(productName))
+                .mapToInt(batch -> batch.quantity().value())
+                .sum();
+    }
+
     // Helpers
     private boolean hasProduct(String productName) {
         return findByName(productName).isPresent();
