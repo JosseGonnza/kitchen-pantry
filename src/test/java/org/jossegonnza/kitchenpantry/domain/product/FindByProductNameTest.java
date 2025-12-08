@@ -1,5 +1,7 @@
-package org.jossegonnza.kitchenpantry.domain;
+package org.jossegonnza.kitchenpantry.domain.product;
 
+import org.jossegonnza.kitchenpantry.domain.Pantry;
+import org.jossegonnza.kitchenpantry.domain.Product;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;

@@ -1,5 +1,8 @@
-package org.jossegonnza.kitchenpantry.domain;
+package org.jossegonnza.kitchenpantry.domain.batch;
 
+import org.jossegonnza.kitchenpantry.domain.Batch;
+import org.jossegonnza.kitchenpantry.domain.Category;
+import org.jossegonnza.kitchenpantry.domain.Pantry;
 import org.jossegonnza.kitchenpantry.domain.exception.ProductNotFoundException;
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,6 @@
-package org.jossegonnza.kitchenpantry.domain;
+package org.jossegonnza.kitchenpantry.domain.quantity;
 
-import org.jossegonnza.kitchenpantry.domain.exception.InsufficientStockException;
+import org.jossegonnza.kitchenpantry.domain.Quantity;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
