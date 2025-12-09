@@ -101,4 +101,12 @@ public class Pantry {
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("No batches available for product " + productName));
     }
+
+    public List<Batch> getExpiredBatches(String productName) {
+        ProductName name = new ProductName(productName);
+        return batches.stream()
+                .filter(batch -> batch.productName().equals(name))
+                .filter(batch -> batch.isExpiredAt(LocalDate.now()))
+                .toList();
+    }
 }

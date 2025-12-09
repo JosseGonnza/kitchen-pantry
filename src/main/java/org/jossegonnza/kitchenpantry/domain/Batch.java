@@ -74,4 +74,8 @@ public class Batch implements Comparable<Batch> {
             return this.createdAt.compareTo(other.createdAt);
         }
     }
+
+    public boolean isExpiredAt(LocalDate date) {
+        return expiryDate.isBefore(date) || expiryDate.isEqual(date);
+    }
 }
