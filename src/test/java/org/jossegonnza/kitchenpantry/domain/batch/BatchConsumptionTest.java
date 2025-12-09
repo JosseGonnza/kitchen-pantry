@@ -69,4 +69,13 @@ public class BatchConsumptionTest {
         assertEquals(1, batches.getFirst().quantity().value());
         assertEquals(4, product.getQuantity());
     }
+
+    @Test
+    void shouldThrowWhenConsumingWithoutAnyBatch() {
+        Pantry pantry = new Pantry();
+        pantry.addProduct("Rice", Category.GRAINS);
+
+        assertThrows(InsufficientStockException.class,
+                () -> pantry.consumeProduct("Rice", 3));
+    }
 }
