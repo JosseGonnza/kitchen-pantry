@@ -129,6 +129,9 @@ public class Pantry {
 
         batch.consume(amount);
         product.decreaseQuantity(amount);
+        if (batch.isEmpty()) {
+            batches.remove(batch);
+        }
     }
 
     // Helpers

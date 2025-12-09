@@ -39,4 +39,15 @@ public class BatchConsumptionTest {
                 () -> pantry.consumeProduct("Rice", 10));
     }
 
+    @Test
+    void shouldRemoveEmptyBatchAfterExactConsumption() {
+        Pantry pantry = new Pantry();
+        pantry.addProduct("Rice", Category.GRAINS);
+        pantry.addBatch("Rice", 5, LocalDate.of(2025, 12, 1));
+
+        pantry.consumeProduct("Rice", 5);
+        List<Batch> batches = pantry.getBatches("Rice");
+
+        assertEquals(0, batches.size());
+    }
 }

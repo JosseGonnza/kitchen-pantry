@@ -36,6 +36,10 @@ public class Batch implements Comparable<Batch> {
         this.quantity = this.quantity.subtract(amount);
     }
 
+    public boolean isEmpty() {
+        return quantity.value() == 0;
+    }
+
     public ProductName productName() {
         return productName;
     }
