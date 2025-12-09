@@ -71,7 +71,7 @@ public class Batch implements Comparable<Batch> {
         if (byExpiry != 0) {
             return byExpiry;
         } else {
-            return this.createdAt.compareTo(other.createdAt);
+            return this.createdAt.compareTo(other.createdAt());
         }
     }
 

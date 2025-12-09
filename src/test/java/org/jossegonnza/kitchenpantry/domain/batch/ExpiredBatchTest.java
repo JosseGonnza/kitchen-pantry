@@ -3,7 +3,6 @@ package org.jossegonnza.kitchenpantry.domain.batch;
 import org.jossegonnza.kitchenpantry.domain.Batch;
 import org.jossegonnza.kitchenpantry.domain.Category;
 import org.jossegonnza.kitchenpantry.domain.Pantry;
-import org.jossegonnza.kitchenpantry.domain.Product;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;

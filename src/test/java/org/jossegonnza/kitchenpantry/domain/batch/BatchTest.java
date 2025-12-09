@@ -22,9 +22,9 @@ public class BatchTest {
         List<Batch> batches = pantry.getBatches("Rice");
 
         assertEquals(1, batches.size());
-        assertEquals("Rice", batches.get(0).productName().value());
-        assertEquals(5, batches.get(0).quantity().value());
-        assertEquals(LocalDate.of(2025, 12, 31), batches.get(0).expiryDate());
+        assertEquals("Rice", batches.getFirst().productName().value());
+        assertEquals(5, batches.getFirst().quantity().value());
+        assertEquals(LocalDate.of(2025, 12, 31), batches.getFirst().expiryDate());
     }
 
     @Test
