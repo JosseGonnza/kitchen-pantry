@@ -78,4 +78,17 @@ public class BatchConsumptionTest {
         assertThrows(InsufficientStockException.class,
                 () -> pantry.consumeProduct("Rice", 3));
     }
+
+    @Test
+    void shouldThrowWhenConsumingMoreThanTotalAcrossBatches() {
+        Pantry pantry = new Pantry();
+        pantry.addProduct("Rice", Category.GRAINS);
+
+        pantry.addBatch("Rice", 2, LocalDate.of(2025, 12, 1));
+        pantry.addBatch("Rice", 3, LocalDate.of(2025, 12, 10));
+
+        assertThrows(InsufficientStockException.class,
+                () -> pantry.consumeProduct("Rice", 6));
+    }
+
 }
