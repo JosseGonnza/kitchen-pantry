@@ -210,4 +210,14 @@ public class Pantry {
                 .filter(summary -> summary.totalQuantity() < threshold)
                 .toList();
     }
+
+    public List<StockSummary> getProductsBelowQuantity(Category category, int threshold) {
+        if (threshold < 0) {
+            throw new IllegalArgumentException("Threshold must be non-negative");
+        }
+        return getStockSummary().stream()
+                .filter(summary -> summary.category() == category)
+                .filter(summary -> summary.totalQuantity() < threshold)
+                .toList();
+    }
 }
