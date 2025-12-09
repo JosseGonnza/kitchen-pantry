@@ -52,22 +52,19 @@ public class Pantry {
     }
 
     public void increaseQuantity(String productName, int amount) {
-        Product product = findByName(productName)
-                .orElseThrow(() -> new ProductNotFoundException(productName));
+        Product product = getExistingProduct(productName);
         product.increaseQuantity(amount);
     }
 
     public void decreaseQuantity(String productName, int amount) {
-        Product product = findByName(productName)
-                .orElseThrow(() -> new ProductNotFoundException(productName));
+        Product product = getExistingProduct(productName);
         product.decreaseQuantity(amount);
     }
 
 
     // Batches
     public void addBatch(String productName, int amount, LocalDate expiryDate) {
-        Product product = findByName(productName)
-                .orElseThrow(() -> new ProductNotFoundException(productName));
+        Product product = getExistingProduct(productName);
         if (amount <= 0) {
             throw new IllegalArgumentException("Batch amount must be positive");
         }
@@ -117,23 +114,23 @@ public class Pantry {
     }
 
     public void consumeProduct(String productName, int amount) {
-        if (amount <= 0) throw new IllegalArgumentException("Amount to consume must be positive");
-        Product product = findByName(productName).orElseThrow(() -> new ProductNotFoundException(productName));
+        validateConsumptionAmount(amount);
+        Product product = getExistingProduct(productName);
         ProductName name = new ProductName(productName);
 
-        List<Batch> productBatches = batches.stream()
-                .filter(batch -> batch.productName().equals(name))
-                .sorted(Comparator.comparing(Batch::expiryDate))
-                .toList();
+        List<Batch> productBatches = getBatchesForProductSortedByExpiry(name);
 
-        int totalAvailable = productBatches.stream()
-                .mapToInt(batch -> batch.quantity().value())
-                .sum();
+        int totalAvailable = calculateTotalAvailable(productBatches);
 
-        if (totalAvailable < amount) {
-            throw new InsufficientStockException(productName, amount, totalAvailable);
-        }
+        ensureSufficientStock(productName, amount, totalAvailable);
 
+        consumeFromBatches(productBatches, amount);
+
+        product.decreaseQuantity(amount);
+    }
+
+    // Helpers
+    private void consumeFromBatches(List<Batch> productBatches, int amount) {
         int remainingToConsume = amount;
         for (Batch batch : productBatches) {
             if (remainingToConsume == 0) {
@@ -151,11 +148,35 @@ public class Pantry {
                 batches.remove(batch);
             }
         }
-
-        product.decreaseQuantity(amount);
     }
 
-    // Helpers
+    private static void ensureSufficientStock(String productName, int request, int available) {
+        if (available < request) {
+            throw new InsufficientStockException(productName, request, available);
+        }
+    }
+
+    private static int calculateTotalAvailable(List<Batch> productBatches) {
+        return productBatches.stream()
+                .mapToInt(batch -> batch.quantity().value())
+                .sum();
+    }
+
+    private List<Batch> getBatchesForProductSortedByExpiry(ProductName name) {
+        return batches.stream()
+                .filter(batch -> batch.productName().equals(name))
+                .sorted(Comparator.comparing(Batch::expiryDate))
+                .toList();
+    }
+
+    private Product getExistingProduct(String productName) {
+        return findByName(productName).orElseThrow(() -> new ProductNotFoundException(productName));
+    }
+
+    private static void validateConsumptionAmount(int amount) {
+        if (amount <= 0) throw new IllegalArgumentException("Amount to consume must be positive");
+    }
+
     private boolean hasProduct(String productName) {
         return findByName(productName).isPresent();
     }
