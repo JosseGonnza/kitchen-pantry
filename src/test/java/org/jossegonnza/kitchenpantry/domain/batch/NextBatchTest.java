@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class NextBatchTest {
     @Test
@@ -20,5 +21,14 @@ public class NextBatchTest {
         Batch nextBatch = pantry.getNextBatch("Rice");
 
         assertEquals(LocalDate.of(2025, 12, 30), nextBatch.expiryDate());
+    }
+
+    @Test
+    void shouldThrowWhenProductHasNoBatches() {
+        Pantry pantry = new Pantry();
+        pantry.addProduct("Rice", Category.GRAINS);
+
+        assertThrows(IllegalStateException.class,
+                () -> pantry.getNextBatch("Rice"));
     }
 }
