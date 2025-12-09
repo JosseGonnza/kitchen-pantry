@@ -180,4 +180,25 @@ public class Pantry {
     private boolean hasProduct(String productName) {
         return findByName(productName).isPresent();
     }
+
+    public List<StockSummary> getStockSummary() {
+        return products.stream()
+                .map(product -> {
+                    String name = product.getName();
+                    List<Batch> productBatches = getBatches(name);
+                    int numberOfBatches = productBatches.size();
+                    LocalDate nextExpiryDate = productBatches.isEmpty()
+                            ? null
+                            : productBatches.getFirst().expiryDate();
+
+                    return new StockSummary(
+                            name,
+                            product.getCategory(),
+                            product.getQuantity(),
+                            numberOfBatches,
+                            nextExpiryDate
+                    );
+                })
+                .toList();
+    }
 }
