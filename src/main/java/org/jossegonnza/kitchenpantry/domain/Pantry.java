@@ -6,6 +6,7 @@ import org.jossegonnza.kitchenpantry.domain.exception.ProductNotFoundException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -116,22 +117,42 @@ public class Pantry {
     }
 
     public void consumeProduct(String productName, int amount) {
-        if (amount <= 0){
-            throw new IllegalArgumentException("Amount to consume must be positive");
-        }
-        Product product = findByName(productName)
-                .orElseThrow(() -> new ProductNotFoundException(productName));
+        if (amount <= 0) throw new IllegalArgumentException("Amount to consume must be positive");
+        Product product = findByName(productName).orElseThrow(() -> new ProductNotFoundException(productName));
         ProductName name = new ProductName(productName);
-        Batch batch = batches.stream()
-                .filter(b -> b.productName().equals(name))
-                .findFirst()
-                .orElseThrow(() -> new InsufficientStockException(productName, amount, 0));
 
-        batch.consume(amount);
-        product.decreaseQuantity(amount);
-        if (batch.isEmpty()) {
-            batches.remove(batch);
+        List<Batch> productBatches = batches.stream()
+                .filter(batch -> batch.productName().equals(name))
+                .sorted(Comparator.comparing(Batch::expiryDate))
+                .toList();
+
+        int totalAvailable = productBatches.stream()
+                .mapToInt(batch -> batch.quantity().value())
+                .sum();
+
+        if (totalAvailable < amount) {
+            throw new InsufficientStockException(productName, amount, totalAvailable);
         }
+
+        int remainingToConsume = amount;
+        for (Batch batch : productBatches) {
+            if (remainingToConsume == 0) {
+                break;
+            }
+            int batchAvailable = batch.quantity().value();
+            if (batchAvailable <= remainingToConsume) {
+                batch.consume(batchAvailable);
+                remainingToConsume -= batchAvailable;
+            } else {
+                batch.consume(remainingToConsume);
+                remainingToConsume = 0;
+            }
+            if (batch.isEmpty()) {
+                batches.remove(batch);
+            }
+        }
+
+        product.decreaseQuantity(amount);
     }
 
     // Helpers

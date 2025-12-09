@@ -50,4 +50,23 @@ public class BatchConsumptionTest {
 
         assertEquals(0, batches.size());
     }
+
+    @Test
+    void shouldConsumeAcrossMultipleBatchesRespectingExpiryOrder() {
+        Pantry pantry = new Pantry();
+        pantry.addProduct("Rice", Category.GRAINS);
+        pantry.addBatch("Rice", 5, LocalDate.of(2025, 12, 1));
+        pantry.addBatch("Rice", 3, LocalDate.of(2025, 12, 10));
+        pantry.addBatch("Rice", 4, LocalDate.of(2025, 12, 8));
+
+        pantry.consumeProduct("Rice", 8);
+        List<Batch> batches = pantry.getBatches("Rice");
+        Product product = pantry.findByName("Rice")
+                        .orElseThrow(() -> new AssertionError("Product 'Rice' should exist"));
+
+        assertEquals(2, batches.size());
+        assertEquals(LocalDate.of(2025, 12, 8), batches.getFirst().expiryDate());
+        assertEquals(1, batches.getFirst().quantity().value());
+        assertEquals(4, product.getQuantity());
+    }
 }
