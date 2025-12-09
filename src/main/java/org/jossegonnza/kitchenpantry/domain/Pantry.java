@@ -4,6 +4,7 @@ import org.jossegonnza.kitchenpantry.domain.exception.DuplicateProductException;
 import org.jossegonnza.kitchenpantry.domain.exception.ProductNotFoundException;
 
 import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -107,6 +108,15 @@ public class Pantry {
         return batches.stream()
                 .filter(batch -> batch.productName().equals(name))
                 .filter(batch -> batch.isExpiredAt(LocalDate.now()))
+                .toList();
+    }
+
+    public List<Batch> getBatchesExpiringWithin(String productName, int days) {
+        ProductName name = new ProductName(productName);
+        LocalDate limit = LocalDate.now().plusDays(days);
+        return batches.stream()
+                .filter(batch -> batch.productName().equals(name))
+                .filter(batch -> batch.expiryDate().isBefore(limit) || batch.expiryDate().isEqual(limit))
                 .toList();
     }
 }
