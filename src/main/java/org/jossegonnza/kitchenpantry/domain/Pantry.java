@@ -93,4 +93,12 @@ public class Pantry {
     private boolean hasProduct(String productName) {
         return findByName(productName).isPresent();
     }
+
+    public Batch getNextBatch(String productName) {
+        ProductName name = new ProductName(productName);
+        return batches.stream()
+                .filter(batch -> batch.productName().equals(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("No batches available for product " + productName));
+    }
 }
