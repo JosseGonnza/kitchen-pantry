@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class StockSummaryTest {
     @Test
@@ -33,4 +34,22 @@ public class StockSummaryTest {
         assertEquals(2, riceSummary.numberOfBatches());
         assertEquals(LocalDate.of(2026, 1, 1), riceSummary.nextExpiryDate());
     }
+
+    @Test
+    void shouldBuildStockSummaryForProductWithoutBatches() {
+        Pantry pantry = new Pantry();
+        pantry.addProduct("Rice", Category.GRAINS);
+
+        List<StockSummary> summaries = pantry.getStockSummary();
+
+        StockSummary rice = summaries.stream()
+                .filter(s -> s.productName().equals("Rice"))
+                .findFirst()
+                .orElseThrow();
+
+        assertEquals(0, rice.totalQuantity());
+        assertEquals(0, rice.numberOfBatches());
+        assertNull(rice.nextExpiryDate());
+    }
+
 }
