@@ -73,6 +73,7 @@ public class Pantry {
         product.increaseQuantity(amount);
 
         batches.add(batch);
+        batches.sort(null);
     }
 
     public List<Batch> getBatches(String name) {

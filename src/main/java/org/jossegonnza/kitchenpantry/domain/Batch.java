@@ -3,7 +3,7 @@ package org.jossegonnza.kitchenpantry.domain;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Batch {
+public class Batch implements Comparable<Batch> {
     private final ProductName productName;
     private final Quantity quantity;
     private final LocalDate expiryDate;
@@ -56,5 +56,11 @@ public class Batch {
                 ", quantity=" + quantity +
                 ", expiryDate=" + expiryDate +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Batch other) {
+        int byExpiry;
+        return byExpiry = this.expiryDate.compareTo(other.expiryDate);
     }
 }
