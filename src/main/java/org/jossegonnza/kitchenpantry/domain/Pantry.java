@@ -1,10 +1,10 @@
 package org.jossegonnza.kitchenpantry.domain;
 
 import org.jossegonnza.kitchenpantry.domain.exception.DuplicateProductException;
+import org.jossegonnza.kitchenpantry.domain.exception.InsufficientStockException;
 import org.jossegonnza.kitchenpantry.domain.exception.ProductNotFoundException;
 
 import java.time.LocalDate;
-import java.time.chrono.ChronoLocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -90,11 +90,6 @@ public class Pantry {
                 .sum();
     }
 
-    // Helpers
-    private boolean hasProduct(String productName) {
-        return findByName(productName).isPresent();
-    }
-
     public Batch getNextBatch(String productName) {
         ProductName name = new ProductName(productName);
         return batches.stream()
@@ -118,5 +113,26 @@ public class Pantry {
                 .filter(batch -> batch.productName().equals(name))
                 .filter(batch -> batch.expiryDate().isBefore(limit) || batch.expiryDate().isEqual(limit))
                 .toList();
+    }
+
+    public void consumeProduct(String productName, int amount) {
+        if (amount <= 0){
+            throw new IllegalArgumentException("Amount to consume must be positive");
+        }
+        Product product = findByName(productName)
+                .orElseThrow(() -> new ProductNotFoundException(productName));
+        ProductName name = new ProductName(productName);
+        Batch batch = batches.stream()
+                .filter(b -> b.productName().equals(name))
+                .findFirst()
+                .orElseThrow(() -> new InsufficientStockException(productName, amount, 0));
+
+        batch.consume(amount);
+        product.decreaseQuantity(amount);
+    }
+
+    // Helpers
+    private boolean hasProduct(String productName) {
+        return findByName(productName).isPresent();
     }
 }

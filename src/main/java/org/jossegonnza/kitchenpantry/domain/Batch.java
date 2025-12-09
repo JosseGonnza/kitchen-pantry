@@ -1,12 +1,14 @@
 package org.jossegonnza.kitchenpantry.domain;
 
+import org.jossegonnza.kitchenpantry.domain.exception.InsufficientStockException;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Batch implements Comparable<Batch> {
     private final ProductName productName;
-    private final Quantity quantity;
+    private Quantity quantity;
     private final LocalDate expiryDate;
     private final LocalDateTime createdAt;
 
@@ -24,6 +26,14 @@ public class Batch implements Comparable<Batch> {
         this.quantity = quantity;
         this.expiryDate = expiryDate;
         this.createdAt = LocalDateTime.now();
+    }
+
+    public void consume(int amount) {
+        int available = quantity.value();
+        if (amount > available) {
+            throw new InsufficientStockException(productName.value(), amount, available);
+        }
+        this.quantity = this.quantity.subtract(amount);
     }
 
     public ProductName productName() {
