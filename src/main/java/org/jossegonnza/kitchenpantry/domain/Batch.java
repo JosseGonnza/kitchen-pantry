@@ -1,12 +1,14 @@
 package org.jossegonnza.kitchenpantry.domain;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Batch implements Comparable<Batch> {
     private final ProductName productName;
     private final Quantity quantity;
     private final LocalDate expiryDate;
+    private final LocalDateTime createdAt;
 
     public Batch(ProductName productName, Quantity quantity, LocalDate expiryDate) {
         if (productName == null) {
@@ -21,6 +23,7 @@ public class Batch implements Comparable<Batch> {
         this.productName = productName;
         this.quantity = quantity;
         this.expiryDate = expiryDate;
+        this.createdAt = LocalDateTime.now();
     }
 
     public ProductName productName() {
@@ -33,6 +36,10 @@ public class Batch implements Comparable<Batch> {
 
     public LocalDate expiryDate() {
         return expiryDate;
+    }
+
+    public LocalDateTime createdAt() {
+        return createdAt;
     }
 
     @Override
@@ -60,7 +67,11 @@ public class Batch implements Comparable<Batch> {
 
     @Override
     public int compareTo(Batch other) {
-        int byExpiry;
-        return byExpiry = this.expiryDate.compareTo(other.expiryDate);
+        int byExpiry = this.expiryDate.compareTo(other.expiryDate);
+        if (byExpiry != 0) {
+            return byExpiry;
+        } else {
+            return this.createdAt.compareTo(other.createdAt);
+        }
     }
 }
