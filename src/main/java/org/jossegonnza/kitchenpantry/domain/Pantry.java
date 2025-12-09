@@ -70,6 +70,7 @@ public class Pantry {
             throw new IllegalArgumentException("Batch amount must be positive");
         }
         Batch batch = new Batch(product.getProductName(), new Quantity(amount), expiryDate);
+        product.increaseQuantity(amount);
 
         batches.add(batch);
     }
