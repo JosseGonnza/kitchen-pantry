@@ -22,6 +22,6 @@ public class ExpiringSoonBatchTest {
         List<Batch> soon = pantry.getBatchesExpiringWithin("Milk", 5);
 
         assertEquals(1, soon.size());
-        assertEquals(3, soon.getFirst().quantity().value());
+        assertEquals(3, soon.get(0).quantity().value());
     }
 }

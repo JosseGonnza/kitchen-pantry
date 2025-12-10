@@ -21,6 +21,6 @@ public class ExpiredBatchTest {
         List<Batch> expired = pantry.getExpiredBatches("Milk");
 
         assertEquals(1, expired.size());
-        assertEquals(3, expired.getFirst().quantity().value());
+        assertEquals(3, expired.get(0).quantity().value());
     }
 }

@@ -26,8 +26,8 @@ public class LowStockTest {
         List<StockSummary> lowStock = pantry.getProductsBelowQuantity(5);
 
         assertEquals(1, lowStock.size());
-        assertEquals("Chicken", lowStock.getFirst().productName());
-        assertEquals(2, lowStock.getFirst().totalQuantity());
+        assertEquals("Chicken", lowStock.get(0).productName());
+        assertEquals(2, lowStock.get(0).totalQuantity());
     }
 
     @Test
@@ -44,8 +44,8 @@ public class LowStockTest {
         List<StockSummary> lowGrains = pantry.getProductsBelowQuantity(Category.GRAINS, 5);
 
         assertEquals(1, lowGrains.size());
-        assertEquals("Rice", lowGrains.getFirst().productName());
-        assertEquals(Category.GRAINS, lowGrains.getFirst().category());
-        assertEquals(3, lowGrains.getFirst().totalQuantity());
+        assertEquals("Rice", lowGrains.get(0).productName());
+        assertEquals(Category.GRAINS, lowGrains.get(0).category());
+        assertEquals(3, lowGrains.get(0).totalQuantity());
     }
 }

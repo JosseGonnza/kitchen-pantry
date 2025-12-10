@@ -189,7 +189,7 @@ public class Pantry {
                     int numberOfBatches = productBatches.size();
                     LocalDate nextExpiryDate = productBatches.isEmpty()
                             ? null
-                            : productBatches.getFirst().expiryDate();
+                            : productBatches.get(0).expiryDate();
 
                     return new StockSummary(
                             name,

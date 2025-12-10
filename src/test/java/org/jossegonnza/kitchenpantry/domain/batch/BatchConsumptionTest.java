@@ -24,7 +24,7 @@ public class BatchConsumptionTest {
         List<Batch> batches = pantry.getBatches("Rice");
 
         assertEquals(1, batches.size());
-        assertEquals(4, batches.getFirst().quantity().value());
+        assertEquals(4, batches.get(0).quantity().value());
         Product rice = pantry.findByName("Rice")
                 .orElseThrow(() -> new AssertionError("Product 'Rice' should exist"));
         assertEquals(4, rice.getQuantity());
@@ -65,8 +65,8 @@ public class BatchConsumptionTest {
                         .orElseThrow(() -> new AssertionError("Product 'Rice' should exist"));
 
         assertEquals(2, batches.size());
-        assertEquals(LocalDate.of(2025, 12, 8), batches.getFirst().expiryDate());
-        assertEquals(1, batches.getFirst().quantity().value());
+        assertEquals(LocalDate.of(2025, 12, 8), batches.get(0).expiryDate());
+        assertEquals(1, batches.get(0).quantity().value());
         assertEquals(4, product.getQuantity());
     }
 
