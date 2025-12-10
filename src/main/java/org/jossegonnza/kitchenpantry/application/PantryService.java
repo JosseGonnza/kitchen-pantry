@@ -1,9 +1,11 @@
 package org.jossegonnza.kitchenpantry.application;
 
+import org.jossegonnza.kitchenpantry.domain.Batch;
 import org.jossegonnza.kitchenpantry.domain.Category;
 import org.jossegonnza.kitchenpantry.domain.Pantry;
 import org.jossegonnza.kitchenpantry.domain.Product;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class PantryService {
@@ -19,5 +21,13 @@ public class PantryService {
 
     public List<Product> getAllProducts() {
         return pantry.getProducts();
+    }
+
+    public void addBatch(String productName, int amount, LocalDate expiryDate) {
+        pantry.addBatch(productName, amount, expiryDate);
+    }
+
+    public List<Batch> getAllBatches(String productName) {
+        return pantry.getBatches(productName);
     }
 }
