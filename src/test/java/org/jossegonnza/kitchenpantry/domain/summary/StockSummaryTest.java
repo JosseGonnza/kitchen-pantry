@@ -1,5 +1,6 @@
 package org.jossegonnza.kitchenpantry.domain.summary;
 
+import org.jossegonnza.kitchenpantry.application.PantryService;
 import org.jossegonnza.kitchenpantry.domain.Category;
 import org.jossegonnza.kitchenpantry.domain.Pantry;
 import org.jossegonnza.kitchenpantry.domain.StockSummary;
@@ -52,4 +53,22 @@ public class StockSummaryTest {
         assertNull(rice.nextExpiryDate());
     }
 
+    @Test
+    void shouldReturnProductsBelowGivenQuantityThreshold() {
+        PantryService service = new PantryService(new Pantry());
+        service.addProduct("Rice", Category.GRAINS);
+        service.addProduct("Chicken", Category.MEAT);
+        service.addProduct("Parsley", Category.OTHER);
+
+        service.addBatch("Rice", 5, LocalDate.of(2025, 12, 1));
+        service.addBatch("Rice", 3, LocalDate.of(2025, 12, 10));
+        service.addBatch("Chicken", 2, LocalDate.of(2025, 11, 20));
+        service.addBatch("Parsley", 15, LocalDate.of(2025, 12, 5));
+
+        List<StockSummary> lowStock = service.getProductsBelowQuantity(5);
+
+        assertEquals(1, lowStock.size());
+        assertEquals("Chicken", lowStock.getFirst().productName());
+        assertEquals(2, lowStock.getFirst().totalQuantity());
+    }
 }
