@@ -1,9 +1,6 @@
 package org.jossegonnza.kitchenpantry.application;
 
-import org.jossegonnza.kitchenpantry.domain.Batch;
-import org.jossegonnza.kitchenpantry.domain.Category;
-import org.jossegonnza.kitchenpantry.domain.Pantry;
-import org.jossegonnza.kitchenpantry.domain.Product;
+import org.jossegonnza.kitchenpantry.domain.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -33,5 +30,9 @@ public class PantryService {
 
     public void consumeProduct(String productName, int amount) {
         pantry.consumeProduct(productName, amount);
+    }
+
+    public List<StockSummary> getStockSummary() {
+        return pantry.getStockSummary();
     }
 }

@@ -1,9 +1,6 @@
 package org.jossegonnza.kitchenpantry.application;
 
-import org.jossegonnza.kitchenpantry.domain.Batch;
-import org.jossegonnza.kitchenpantry.domain.Category;
-import org.jossegonnza.kitchenpantry.domain.Pantry;
-import org.jossegonnza.kitchenpantry.domain.Product;
+import org.jossegonnza.kitchenpantry.domain.*;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -53,5 +50,28 @@ public class PantryServiceTest {
         assertEquals("Rice", batches.getFirst().productName().value());
         assertEquals(6, batches.getFirst().quantity().value());
         assertEquals(LocalDate.of(2025, 12, 5), batches.getFirst().expiryDate());
+    }
+
+    @Test
+    void shouldBuildStockSummary() {
+        PantryService service = new PantryService(new Pantry());
+        service.addProduct("Rice", Category.GRAINS);
+        service.addProduct("Chicken", Category.MEAT);
+
+        service.addBatch("Rice", 5, LocalDate.of(2026, 1, 1));
+        service.addBatch("Rice", 3, LocalDate.of(2026, 2, 10));
+        service.addBatch("Chicken", 4, LocalDate.of(2026, 2, 6));
+        List<StockSummary> summaries = service.getStockSummary();
+
+        StockSummary riceSummary = summaries.stream()
+                .filter(stockSummary -> stockSummary.productName().equals("Rice"))
+                .findFirst()
+                .orElseThrow();
+
+        assertEquals("Rice", riceSummary.productName());
+        assertEquals(Category.GRAINS, riceSummary.category());
+        assertEquals(8, riceSummary.totalQuantity());
+        assertEquals(2, riceSummary.numberOfBatches());
+        assertEquals(LocalDate.of(2026, 1, 1), riceSummary.nextExpiryDate());
     }
 }
