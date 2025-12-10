@@ -30,4 +30,8 @@ public class PantryService {
     public List<Batch> getAllBatches(String productName) {
         return pantry.getBatches(productName);
     }
+
+    public void consumeProduct(String productName, int amount) {
+        pantry.consumeProduct(productName, amount);
+    }
 }
