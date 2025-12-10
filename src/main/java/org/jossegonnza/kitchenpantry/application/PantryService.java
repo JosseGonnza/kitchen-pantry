@@ -39,4 +39,8 @@ public class PantryService {
     public List<StockSummary> getProductsBelowQuantity(int threshold) {
         return pantry.getProductsBelowQuantity(threshold);
     }
+
+    public List<StockSummary> getProductsBelowQuantity(Category category, int threshold) {
+        return pantry.getProductsBelowQuantity(category, threshold);
+    }
 }

@@ -71,4 +71,23 @@ public class StockSummaryTest {
         assertEquals("Chicken", lowStock.getFirst().productName());
         assertEquals(2, lowStock.getFirst().totalQuantity());
     }
+
+    @Test
+    void shouldReturnLowStockProductsFilterByCategory() {
+        PantryService service = new PantryService(new Pantry());
+        service.addProduct("Rice", Category.GRAINS);
+        service.addProduct("Chicken", Category.MEAT);
+        service.addProduct("Pasta", Category.GRAINS);
+
+        service.addBatch("Rice", 3, LocalDate.of(2025, 12, 1));
+        service.addBatch("Pasta", 10, LocalDate.of(2025, 12, 10));
+        service.addBatch("Chicken", 2, LocalDate.of(2025, 11, 20));
+
+        List<StockSummary> lowGrains = service.getProductsBelowQuantity(Category.GRAINS, 5);
+
+        assertEquals(1, lowGrains.size());
+        assertEquals("Rice", lowGrains.getFirst().productName());
+        assertEquals(Category.GRAINS, lowGrains.getFirst().category());
+        assertEquals(3, lowGrains.getFirst().totalQuantity());
+    }
 }
