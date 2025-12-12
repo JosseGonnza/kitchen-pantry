@@ -1,10 +1,12 @@
 package org.jossegonnza.kitchenpantry.application;
 
 import org.jossegonnza.kitchenpantry.domain.*;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Service
 public class PantryService {
     private final Pantry pantry;
 
