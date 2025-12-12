@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title>Kitchen Pantry</title>
+    <link rel="stylesheet" href="app.css"/>
+</head>
+<body>
+<header class="topbar">
+    <div class="brand">
+        <span class="logo" aria-hidden="true">🧺</span>
+        <div>
+            <h1>Kitchen Pantry</h1>
+            <p class="subtitle">Shelves view — minimal & clean</p>
+        </div>
+    </div>
+
+    <div class="top-actions">
+        <button id="refreshBtn" class="btn btn-accent">Refresh</button>
+    </div>
+</header>
+
+<main class="layout">
+    <aside class="panel sidebar">
+        <section class="section">
+            <div class="section-head">
+                <h2>Add product</h2>
+                <span class="hint">POST /api/products</span>
+            </div>
+
+            <form id="addProductForm" class="form">
+                <label>
+                    Name
+                    <input id="productName" placeholder="Rice" autocomplete="off" required/>
+                </label>
+
+                <label>
+                    Category
+                    <select id="productCategory" required>
+                        <option value="GRAINS">GRAINS</option>
+                        <option value="MEAT">MEAT</option>
+                        <option value="CLEANING">CLEANING</option>
+                        <option value="OTHER">OTHER</option>
+                    </select>
+                </label>
+
+                <button class="btn" type="submit">Create</button>
+                <p id="productMsg" class="msg" aria-live="polite"></p>
+            </form>
+        </section>
+
+        <div class="divider"></div>
+
+        <section class="section">
+            <div class="section-head">
+                <h2>Add batch</h2>
+                <span class="hint">POST /api/products/{name}/batches</span>
+            </div>
+
+            <form id="addBatchForm" class="form">
+                <label>
+                    Product name
+                    <input id="batchProductName" placeholder="Rice" autocomplete="off" required/>
+                </label>
+
+                <label>
+                    Amount
+                    <input id="batchAmount" type="number" min="1" value="1" required/>
+                </label>
+
+                <label>
+                    Expiry date
+                    <input id="batchExpiry" type="date" required/>
+                </label>
+
+                <button class="btn" type="submit">Add batch</button>
+                <p id="batchMsg" class="msg" aria-live="polite"></p>
+            </form>
+        </section>
+
+        <div class="divider"></div>
+
+        <section class="section">
+            <div class="section-head">
+                <h2>Consume product</h2>
+                <span class="hint">POST /api/products/{name}/consume</span>
+            </div>
+
+            <form id="consumeForm" class="form">
+                <label>
+                    Product name
+                    <input id="consumeProductName" placeholder="Rice" autocomplete="off" required/>
+                </label>
+
+                <label>
+                    Amount
+                    <input id="consumeAmount" type="number" min="1" value="1" required/>
+                </label>
+
+                <button class="btn" type="submit">Consume</button>
+                <p id="consumeMsg" class="msg" aria-live="polite"></p>
+            </form>
+        </section>
+
+        <div class="divider"></div>
+
+        <section class="section">
+            <div class="section-head">
+                <h2>Low stock filter</h2>
+                <span class="hint">GET /api/stock/low</span>
+            </div>
+
+            <form id="lowStockForm" class="form">
+                <label>
+                    Threshold
+                    <input id="lowThreshold" type="number" min="0" value="5" required/>
+                </label>
+
+                <label>
+                    Category (optional)
+                    <select id="lowCategory">
+                        <option value="">All</option>
+                        <option value="GRAINS">GRAINS</option>
+                        <option value="MEAT">MEAT</option>
+                        <option value="CLEANING">CLEANING</option>
+                        <option value="OTHER">OTHER</option>
+                    </select>
+                </label>
+
+                <div class="row">
+                    <button class="btn" type="submit">Apply</button>
+                    <button id="clearLowBtn" class="btn btn-ghost" type="button">Clear</button>
+                </div>
+
+                <p class="micro">
+                    Applied: <span id="lowApplied" class="tag">none</span>
+                </p>
+                <p id="lowMsg" class="msg" aria-live="polite"></p>
+            </form>
+        </section>
+    </aside>
+
+    <section class="panel content">
+        <div class="content-head">
+            <div>
+                <h2>Shelves</h2>
+                <p class="subtitle2">Each box is one unit (capped). “Low stock” highlights products under threshold.</p>
+            </div>
+            <div class="content-meta">
+                <span id="lastUpdated" class="tag">—</span>
+            </div>
+        </div>
+
+        <div id="shelves" class="shelves">
+            <p class="empty">Loading…</p>
+        </div>
+    </section>
+</main>
+
+<!-- Modal: batches -->
+<div id="modalBackdrop" class="modal-backdrop hidden" role="presentation"></div>
+<div id="batchesModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-head">
+        <div>
+            <h3 id="modalTitle">Batches</h3>
+            <p id="modalSubtitle" class="subtitle2">Ordered by expiry (soonest first)</p>
+        </div>
+        <button id="modalCloseBtn" class="btn btn-ghost" type="button">Close</button>
+    </div>
+
+    <div class="modal-body">
+        <div id="modalBody" class="modal-list"></div>
+    </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
