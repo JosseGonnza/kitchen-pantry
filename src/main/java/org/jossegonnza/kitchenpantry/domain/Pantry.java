@@ -207,7 +207,7 @@ public class Pantry {
             throw new IllegalArgumentException("Threshold must be non-negative");
         }
         return getStockSummary().stream()
-                .filter(summary -> summary.totalQuantity() < threshold)
+                .filter(summary -> summary.totalQuantity() <= threshold)
                 .toList();
     }
 
@@ -217,7 +217,7 @@ public class Pantry {
         }
         return getStockSummary().stream()
                 .filter(summary -> summary.category() == category)
-                .filter(summary -> summary.totalQuantity() < threshold)
+                .filter(summary -> summary.totalQuantity() <= threshold)
                 .toList();
     }
 }
