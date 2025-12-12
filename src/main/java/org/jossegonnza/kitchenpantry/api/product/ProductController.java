@@ -2,9 +2,12 @@ package org.jossegonnza.kitchenpantry.api.product;
 
 import jakarta.validation.Valid;
 import org.jossegonnza.kitchenpantry.api.product.dto.CreateProductRequest;
+import org.jossegonnza.kitchenpantry.api.product.dto.ProductResponse;
 import org.jossegonnza.kitchenpantry.application.PantryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 //http://localhost:8080/swagger-ui/index.html
 @RestController
@@ -20,5 +23,12 @@ public class ProductController {
     @ResponseStatus(HttpStatus.CREATED)
     public void create(@Valid @RequestBody CreateProductRequest request){
         pantryService.addProduct(request.name(), request.category());
+    }
+
+    @GetMapping
+    public List<ProductResponse> getAll() {
+        return pantryService.getProducts().stream()
+                .map(ProductResponse::from)
+                .toList();
     }
 }
