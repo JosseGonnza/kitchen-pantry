@@ -1,6 +1,7 @@
 package org.jossegonnza.kitchenpantry.api.product;
 
 import jakarta.validation.Valid;
+import org.jossegonnza.kitchenpantry.api.product.dto.ConsumeProductRequest;
 import org.jossegonnza.kitchenpantry.api.product.dto.CreateProductRequest;
 import org.jossegonnza.kitchenpantry.api.product.dto.ProductResponse;
 import org.jossegonnza.kitchenpantry.application.PantryService;
@@ -30,5 +31,11 @@ public class ProductController {
         return pantryService.getProducts().stream()
                 .map(ProductResponse::from)
                 .toList();
+    }
+
+    @PostMapping("/{productName}/consume")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void consumeProduct(@PathVariable String productName, @Valid @RequestBody ConsumeProductRequest request) {
+        pantryService.consumeProduct(productName, request.amount());
     }
 }
