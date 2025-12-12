@@ -14,7 +14,7 @@ public class PantryServiceTest {
         PantryService service = new PantryService(new Pantry());
 
         service.addProduct("Rice", Category.GRAINS);
-        List<Product> products = service.getAllProducts();
+        List<Product> products = service.getProducts();
 
         assertEquals(1, products.size());
         assertEquals("Rice", products.get(0).getName());
@@ -27,7 +27,7 @@ public class PantryServiceTest {
         service.addProduct("Rice", Category.GRAINS);
 
         service.addBatch("Rice", 5, LocalDate.of(2025, 12, 1));
-        List<Batch> batches = service.getAllBatches("Rice");
+        List<Batch> batches = service.getBatches("Rice");
 
         assertEquals(1, batches.size());
         assertEquals("Rice", batches.get(0).productName().value());
@@ -44,7 +44,7 @@ public class PantryServiceTest {
         service.addBatch("Rice", 8, LocalDate.of(2025, 12, 5));
 
         service.consumeProduct("Rice", 7);
-        List<Batch> batches = service.getAllBatches("Rice");
+        List<Batch> batches = service.getBatches("Rice");
 
         assertEquals(1, batches.size());
         assertEquals("Rice", batches.get(0).productName().value());

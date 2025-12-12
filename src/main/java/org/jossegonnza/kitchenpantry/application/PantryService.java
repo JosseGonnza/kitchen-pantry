@@ -16,7 +16,7 @@ public class PantryService {
         pantry.addProduct(productName, category);
     }
 
-    public List<Product> getAllProducts() {
+    public List<Product> getProducts() {
         return pantry.getProducts();
     }
 
@@ -24,7 +24,7 @@ public class PantryService {
         pantry.addBatch(productName, amount, expiryDate);
     }
 
-    public List<Batch> getAllBatches(String productName) {
+    public List<Batch> getBatches(String productName) {
         return pantry.getBatches(productName);
     }
 
