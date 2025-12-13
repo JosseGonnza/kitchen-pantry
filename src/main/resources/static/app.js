@@ -157,9 +157,11 @@
     function productBadges(summary) {
       const batches = summary.numberOfBatches ?? 0;
       const next = summary.nextExpiryDate ?? "—";
+      const total = summary.totalQuantity ?? 0;  // ✅ NUEVO
       const parts = [];
       parts.push(`<span class="badge">${batches} lote${batches === 1 ? "" : "s"}</span>`);
       parts.push(`<span class="badge">próximo ${escapeHtml(next)}</span>`);
+      parts.push(`<span class="badge">${total} unidad${total === 1 ? "" : "es"}</span>`);  // ✅ NUEVO
       if (lowSet.has(summary.productName)) {
         parts.push(`<span class="badge low">stock bajo</span>`);
       }
