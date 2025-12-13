@@ -69,10 +69,11 @@ public class Pantry {
             throw new IllegalArgumentException("Batch amount must be positive");
         }
         Batch batch = new Batch(product.getProductName(), new Quantity(amount), expiryDate);
-        product.increaseQuantity(amount);
 
         batches.add(batch);
-        batches.sort(null);
+        batches.sort(Batch::compareTo);
+
+        product.increaseQuantity(amount);
     }
 
     public List<Batch> getBatches(String name) {
@@ -132,6 +133,8 @@ public class Pantry {
     // Helpers
     private void consumeFromBatches(List<Batch> productBatches, int amount) {
         int remainingToConsume = amount;
+        List<Batch> toRemove = new ArrayList<>();
+
         for (Batch batch : productBatches) {
             if (remainingToConsume == 0) {
                 break;
@@ -145,9 +148,11 @@ public class Pantry {
                 remainingToConsume = 0;
             }
             if (batch.isEmpty()) {
-                batches.remove(batch);
+                toRemove.add(batch);
             }
         }
+
+        batches.removeAll(toRemove);
     }
 
     private static void ensureSufficientStock(String productName, int request, int available) {
