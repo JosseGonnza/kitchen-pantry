@@ -11,6 +11,17 @@
       consume: (name) => `/api/products/${encodeURIComponent(name)}/consume`,
     };
 
+    const CATEGORY_NAMES = {
+      GRAINS: "CEREALES",
+      MEAT: "CARNE",
+      CLEANING: "LIMPIEZA",
+      PASTA: "PASTA",
+      VEGETABLE: "VERDURAS",
+      FRUIT: "FRUTAS",
+      DAIRY: "LÁCTEOS",
+      OTHER: "OTROS"
+    };
+
     const el = {
       shelves: document.getElementById("shelves"),
       refreshBtn: document.getElementById("refreshBtn"),
@@ -206,7 +217,7 @@
         html += `
           <div class="shelf">
             <div class="shelf-head">
-              <h3 class="shelf-title">${escapeHtml(category)}</h3>
+              <h3 class="shelf-title">${escapeHtml(CATEGORY_NAMES[category] || category)}</h3>
               <div class="shelf-meta">${items.length} productos</div>
             </div>
             <div class="products">${productsHtml}</div>

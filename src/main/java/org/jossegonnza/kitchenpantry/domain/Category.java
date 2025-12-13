@@ -4,6 +4,7 @@ public enum Category {
     GRAINS,
     PASTA,
     MEAT,
+    FISH,
     VEGETABLE,
     FRUIT,
     DAIRY,

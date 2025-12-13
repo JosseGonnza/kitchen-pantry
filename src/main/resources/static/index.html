@@ -13,7 +13,7 @@
         <span class="logo" aria-hidden="true">🧺</span>
         <div>
             <h1>Despensa de Cocina</h1>
-            <p class="subtitle">Vista de estanterías — minimalista y limpia</p>
+            <p class="subtitle">Vista de estanterías — minimalista</p>
         </div>
     </div>
 
@@ -27,7 +27,7 @@
         <section class="section">
             <div class="section-head">
                 <h2>Añadir producto</h2>
-                <span class="hint">POST /api/products</span>
+<!--                <span class="hint">POST /api/products</span>-->
             </div>
 
             <form id="addProductForm" class="form">
@@ -39,8 +39,13 @@
                 <label>
                     Categoría
                     <select id="productCategory" required>
+                        <option value="FRUIT">FRUTA</option>
+                        <option value="VEGETABLE">VEGETALES</option>
                         <option value="GRAINS">CEREALES</option>
+                        <option value="PASTA">PASTA</option>
                         <option value="MEAT">CARNE</option>
+                        <option value="FISH">PESCADO</option>
+                        <option value="DAIRY">HOGAR</option>
                         <option value="CLEANING">LIMPIEZA</option>
                         <option value="OTHER">OTROS</option>
                     </select>
@@ -56,7 +61,7 @@
         <section class="section">
             <div class="section-head">
                 <h2>Añadir lote</h2>
-                <span class="hint">POST /api/products/{name}/batches</span>
+<!--                <span class="hint">POST /api/products/{name}/batches</span>-->
             </div>
 
             <form id="addBatchForm" class="form">
@@ -85,7 +90,7 @@
         <section class="section">
             <div class="section-head">
                 <h2>Consumir producto</h2>
-                <span class="hint">POST /api/products/{name}/consume</span>
+<!--                <span class="hint">POST /api/products/{name}/consume</span>-->
             </div>
 
             <form id="consumeForm" class="form">
@@ -109,7 +114,7 @@
         <section class="section">
             <div class="section-head">
                 <h2>Filtro stock bajo</h2>
-                <span class="hint">GET /api/stock/low</span>
+<!--                <span class="hint">GET /api/stock/low</span>-->
             </div>
 
             <form id="lowStockForm" class="form">
@@ -122,8 +127,13 @@
                     Categoría (opcional)
                     <select id="lowCategory">
                         <option value="">Todas</option>
+                        <option value="FRUIT">FRUTA</option>
+                        <option value="VEGETABLE">VEGETALES</option>
                         <option value="GRAINS">CEREALES</option>
+                        <option value="PASTA">PASTA</option>
                         <option value="MEAT">CARNE</option>
+                        <option value="FISH">PESCADO</option>
+                        <option value="DAIRY">HOGAR</option>
                         <option value="CLEANING">LIMPIEZA</option>
                         <option value="OTHER">OTROS</option>
                     </select>
@@ -146,7 +156,7 @@
         <div class="content-head">
             <div>
                 <h2>Estanterías</h2>
-                <p class="subtitle2">Cada caja es una unidad (limitado a 30). "Stock bajo" resalta productos bajo el umbral.</p>
+                <p class="subtitle2">Cada caja es una unidad. "Stock bajo" resalta productos bajo el umbral.</p>
             </div>
             <div class="content-meta">
                 <span id="lastUpdated" class="tag">—</span>
