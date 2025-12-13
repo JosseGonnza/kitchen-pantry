@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/product/{productName}/batches")
+@RequestMapping("/api/products/{productName}/batches")
 public class BatchController {
     private final PantryService pantryService;
 
