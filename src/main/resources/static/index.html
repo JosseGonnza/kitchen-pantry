@@ -1,23 +1,24 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="es">
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <title>Kitchen Pantry</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Despensa de Cocina</title>
     <link rel="stylesheet" href="app.css"/>
+
 </head>
 <body>
 <header class="topbar">
     <div class="brand">
         <span class="logo" aria-hidden="true">🧺</span>
         <div>
-            <h1>Kitchen Pantry</h1>
-            <p class="subtitle">Shelves view — minimal & clean</p>
+            <h1>Despensa de Cocina</h1>
+            <p class="subtitle">Vista de estanterías — minimalista y limpia</p>
         </div>
     </div>
 
     <div class="top-actions">
-        <button id="refreshBtn" class="btn btn-accent">Refresh</button>
+        <button id="refreshBtn" class="btn btn-accent">Actualizar</button>
     </div>
 </header>
 
@@ -25,27 +26,27 @@
     <aside class="panel sidebar">
         <section class="section">
             <div class="section-head">
-                <h2>Add product</h2>
+                <h2>Añadir producto</h2>
                 <span class="hint">POST /api/products</span>
             </div>
 
             <form id="addProductForm" class="form">
                 <label>
-                    Name
-                    <input id="productName" placeholder="Rice" autocomplete="off" required/>
+                    Nombre
+                    <input id="productName" placeholder="Arroz" autocomplete="off" required/>
                 </label>
 
                 <label>
-                    Category
+                    Categoría
                     <select id="productCategory" required>
-                        <option value="GRAINS">GRAINS</option>
-                        <option value="MEAT">MEAT</option>
-                        <option value="CLEANING">CLEANING</option>
-                        <option value="OTHER">OTHER</option>
+                        <option value="GRAINS">CEREALES</option>
+                        <option value="MEAT">CARNE</option>
+                        <option value="CLEANING">LIMPIEZA</option>
+                        <option value="OTHER">OTROS</option>
                     </select>
                 </label>
 
-                <button class="btn" type="submit">Create</button>
+                <button class="btn" type="submit">Crear</button>
                 <p id="productMsg" class="msg" aria-live="polite"></p>
             </form>
         </section>
@@ -54,27 +55,27 @@
 
         <section class="section">
             <div class="section-head">
-                <h2>Add batch</h2>
+                <h2>Añadir lote</h2>
                 <span class="hint">POST /api/products/{name}/batches</span>
             </div>
 
             <form id="addBatchForm" class="form">
                 <label>
-                    Product name
-                    <input id="batchProductName" placeholder="Rice" autocomplete="off" required/>
+                    Nombre del producto
+                    <input id="batchProductName" placeholder="Arroz" autocomplete="off" required/>
                 </label>
 
                 <label>
-                    Amount
+                    Cantidad
                     <input id="batchAmount" type="number" min="1" value="1" required/>
                 </label>
 
                 <label>
-                    Expiry date
+                    Fecha de caducidad
                     <input id="batchExpiry" type="date" required/>
                 </label>
 
-                <button class="btn" type="submit">Add batch</button>
+                <button class="btn" type="submit">Añadir lote</button>
                 <p id="batchMsg" class="msg" aria-live="polite"></p>
             </form>
         </section>
@@ -83,22 +84,22 @@
 
         <section class="section">
             <div class="section-head">
-                <h2>Consume product</h2>
+                <h2>Consumir producto</h2>
                 <span class="hint">POST /api/products/{name}/consume</span>
             </div>
 
             <form id="consumeForm" class="form">
                 <label>
-                    Product name
-                    <input id="consumeProductName" placeholder="Rice" autocomplete="off" required/>
+                    Nombre del producto
+                    <input id="consumeProductName" placeholder="Arroz" autocomplete="off" required/>
                 </label>
 
                 <label>
-                    Amount
+                    Cantidad
                     <input id="consumeAmount" type="number" min="1" value="1" required/>
                 </label>
 
-                <button class="btn" type="submit">Consume</button>
+                <button class="btn" type="submit">Consumir</button>
                 <p id="consumeMsg" class="msg" aria-live="polite"></p>
             </form>
         </section>
@@ -107,34 +108,34 @@
 
         <section class="section">
             <div class="section-head">
-                <h2>Low stock filter</h2>
+                <h2>Filtro stock bajo</h2>
                 <span class="hint">GET /api/stock/low</span>
             </div>
 
             <form id="lowStockForm" class="form">
                 <label>
-                    Threshold
+                    Umbral
                     <input id="lowThreshold" type="number" min="0" value="5" required/>
                 </label>
 
                 <label>
-                    Category (optional)
+                    Categoría (opcional)
                     <select id="lowCategory">
-                        <option value="">All</option>
-                        <option value="GRAINS">GRAINS</option>
-                        <option value="MEAT">MEAT</option>
-                        <option value="CLEANING">CLEANING</option>
-                        <option value="OTHER">OTHER</option>
+                        <option value="">Todas</option>
+                        <option value="GRAINS">CEREALES</option>
+                        <option value="MEAT">CARNE</option>
+                        <option value="CLEANING">LIMPIEZA</option>
+                        <option value="OTHER">OTROS</option>
                     </select>
                 </label>
 
                 <div class="row">
-                    <button class="btn" type="submit">Apply</button>
-                    <button id="clearLowBtn" class="btn btn-ghost" type="button">Clear</button>
+                    <button class="btn" type="submit">Aplicar</button>
+                    <button id="clearLowBtn" class="btn btn-ghost" type="button">Limpiar</button>
                 </div>
 
                 <p class="micro">
-                    Applied: <span id="lowApplied" class="tag">none</span>
+                    Aplicado: <span id="lowApplied" class="tag">ninguno</span>
                 </p>
                 <p id="lowMsg" class="msg" aria-live="polite"></p>
             </form>
@@ -144,8 +145,8 @@
     <section class="panel content">
         <div class="content-head">
             <div>
-                <h2>Shelves</h2>
-                <p class="subtitle2">Each box is one unit (capped). “Low stock” highlights products under threshold.</p>
+                <h2>Estanterías</h2>
+                <p class="subtitle2">Cada caja es una unidad (limitado a 30). "Stock bajo" resalta productos bajo el umbral.</p>
             </div>
             <div class="content-meta">
                 <span id="lastUpdated" class="tag">—</span>
@@ -153,20 +154,20 @@
         </div>
 
         <div id="shelves" class="shelves">
-            <p class="empty">Loading…</p>
+            <p class="empty">Cargando…</p>
         </div>
     </section>
 </main>
 
-<!-- Modal: batches -->
+<!-- Modal: lotes -->
 <div id="modalBackdrop" class="modal-backdrop hidden" role="presentation"></div>
 <div id="batchesModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal-head">
         <div>
-            <h3 id="modalTitle">Batches</h3>
-            <p id="modalSubtitle" class="subtitle2">Ordered by expiry (soonest first)</p>
+            <h3 id="modalTitle">Lotes</h3>
+            <p id="modalSubtitle" class="subtitle2">Ordenados por caducidad (próximos primero)</p>
         </div>
-        <button id="modalCloseBtn" class="btn btn-ghost" type="button">Close</button>
+        <button id="modalCloseBtn" class="btn btn-ghost" type="button">Cerrar</button>
     </div>
 
     <div class="modal-body">
