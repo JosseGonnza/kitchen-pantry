@@ -3,6 +3,7 @@ package org.jossegonnza.kitchenpantry.domain;
 import org.jossegonnza.kitchenpantry.domain.exception.DuplicateProductException;
 import org.jossegonnza.kitchenpantry.domain.exception.InsufficientStockException;
 import org.jossegonnza.kitchenpantry.domain.exception.ProductNotFoundException;
+import org.jossegonnza.kitchenpantry.infrastructure.persistence.jdbc.JdbcPantryRepository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -14,13 +15,28 @@ public class Pantry {
     private final List<Product> products = new ArrayList<>();
     private final List<Batch> batches = new ArrayList<>();
 
+    private final JdbcPantryRepository repository;
+
+    public Pantry(JdbcPantryRepository repository) {
+        this.repository = repository;
+    }
+
+    public Pantry() {
+        this.repository = null;
+    }
+
     // Products
     public void addProduct(String name, Category category) {
-        boolean productAlreadyExists = hasProduct(name);
-        if (productAlreadyExists) {
-            throw new DuplicateProductException(name);
+        if(repository != null) {
+            Product product = new Product(name, category);
+            repository.saveProduct(product);
         } else {
-            products.add(new Product(name, category));
+            boolean productAlreadyExists = hasProduct(name);
+            if (productAlreadyExists) {
+                throw new DuplicateProductException(name);
+            } else {
+                products.add(new Product(name, category));
+            }
         }
     }
 
