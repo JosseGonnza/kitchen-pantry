@@ -1,4 +1,4 @@
-package org.jossegonnza.kitchenpantry.api;
+package org.jossegonnza.kitchenpantry;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

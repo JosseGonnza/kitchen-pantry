@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface SpringDataProductRepository extends CrudRepository<ProductEntity, Long> {
 
-    @Query("SELECT * FROM products WHERE LOWERR(name) = LOWER(:name)")
+    @Query("SELECT * FROM products WHERE LOWER(name) = LOWER(:name)")
     Optional<ProductEntity> findByNameIgnoreCase(@Param("name") String name);
-    boolean existByNameIgnoreCase(String name);
+    boolean existsByNameIgnoreCase(String name);
 }

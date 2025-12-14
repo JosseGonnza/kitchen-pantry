@@ -33,7 +33,7 @@ public class JdbcPantryRepository {
 
     @Transactional
     public void saveProduct(Product product) {
-        if (productRepository.existByNameIgnoreCase(product.getName())) {
+        if (productRepository.existsByNameIgnoreCase(product.getName())) {
             throw new DuplicateProductException(product.getName());
         }
         ProductEntity entity = ProductMapper.toEntity(product, null);
@@ -87,7 +87,7 @@ public class JdbcPantryRepository {
         ProductEntity productEntity = productRepository.findByNameIgnoreCase(productName)
                 .orElseThrow(() -> new ProductNotFoundException(productName));
 
-        return batchRepository.findByProductInOrderByExpiryDateAsc(productEntity.getId())
+        return batchRepository.findByProductIdOrderByExpiryDateAsc(productEntity.getId())
                 .stream()
                 .map(entity -> BatchMapper.toDomain(entity, productName))
                 .toList();

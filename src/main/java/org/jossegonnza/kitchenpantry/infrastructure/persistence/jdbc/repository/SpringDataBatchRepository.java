@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface SpringDataBatchRepository extends CrudRepository<BatchEntity, Long> {
-    List<BatchEntity> findByProductInOrderByExpiryDateAsc(Long productId);
+    List<BatchEntity> findByProductIdOrderByExpiryDateAsc(Long productId);
 
     @Query("SELECT * FROM batches WHERE product_id = :productId AND expiry_date <= :date ORDER BY expiry_date ASC")
     List<BatchEntity> findExpiredBatches(@Param("productId") Long productId, @Param("date")LocalDate date);
