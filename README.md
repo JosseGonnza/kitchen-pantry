@@ -125,12 +125,44 @@ Esto garantiza que el proyecto sea confiable a medida que crece.
 
 ---
 
-## ▶️ Ejecutar el backend sin Docker
+## ▶️ Ejecutar el backend
 
+### Modo desarrollo (H2 en memoria)
+```bash
+mvn spring-boot:run
+```
+Accede a H2 Console: http://localhost:8080/h2-console
+- JDBC URL: `jdbc:h2:mem:pantrydb`
+- User: `sa`
+- Password: (vacío)
+
+### Modo desarrollo con PostgreSQL
+```bash
+# 1. Levantar PostgreSQL
+docker-compose up -d
+
+# 2. Ejecutar la aplicación
+SPRING_PROFILES_ACTIVE=prod mvn spring-boot:run
+
+# 3. Parar PostgreSQL cuando termines
+docker-compose down
 ```
 
-cd backend
+### Modo producción
+```bash
+# Con variables de entorno
+export DATABASE_URL=jdbc:postgresql://localhost:5432/kitchen_pantry
+export DATABASE_USER=postgres
+export DATABASE_PASSWORD=tu_password_seguro
+export SPRING_PROFILES_ACTIVE=prod
+
 mvn spring-boot:run
+```
+
+### Verificar profile activo
+```bash
+# El log debe mostrar: "The following profiles are active: dev"
+mvn spring-boot:run | grep "profiles are active"
 ```
 
 ---
