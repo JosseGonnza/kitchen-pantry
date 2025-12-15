@@ -167,6 +167,47 @@ mvn spring-boot:run | grep "profiles are active"
 
 ---
 
+## 📊 Observabilidad y Logs
+
+### Logs en desarrollo
+Los logs se muestran en consola con formato legible:
+```bash
+2024-12-15 10:30:45.123 [http-nio-8080-exec-1] INFO  o.j.k.application.PantryService - Adding new product: Rice with category: GRAINS
+```
+
+### Logs en producción
+Los logs se generan en formato JSON para facilitar su procesamiento:
+```json
+{
+  "timestamp": "2024-12-15T10:30:45.123Z",
+  "level": "INFO",
+  "thread": "http-nio-8080-exec-1",
+  "logger": "org.jossegonnza.kitchenpantry.application.PantryService",
+  "message": "Adding new product: Rice with category: GRAINS",
+  "request_id": "a1b2c3d4"
+}
+```
+
+### Ver logs en producción
+```bash
+# Logs en consola (JSON)
+SPRING_PROFILES_ACTIVE=prod mvn spring-boot:run
+
+# Logs en archivo
+tail -f logs/kitchen-pantry.log
+```
+
+### Request Tracing
+Cada petición HTTP tiene un `request_id` único que aparece en todos los logs relacionados:
+```
+[request_id=a1b2c3d4] Incoming request: POST /api/products
+[request_id=a1b2c3d4] Adding new product: Rice
+[request_id=a1b2c3d4] Product saved successfully: Rice
+[request_id=a1b2c3d4] Request completed - Duration: 45ms
+```
+
+---
+
 ## 🔧 Tecnologías Principales
 
 - Java 21
