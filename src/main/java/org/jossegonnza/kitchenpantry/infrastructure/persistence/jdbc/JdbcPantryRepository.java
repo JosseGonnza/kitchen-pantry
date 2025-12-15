@@ -4,12 +4,14 @@ import org.jossegonnza.kitchenpantry.domain.Batch;
 import org.jossegonnza.kitchenpantry.domain.Product;
 import org.jossegonnza.kitchenpantry.domain.exception.DuplicateProductException;
 import org.jossegonnza.kitchenpantry.domain.exception.ProductNotFoundException;
+import org.jossegonnza.kitchenpantry.infrastructure.logging.LogHelper;
 import org.jossegonnza.kitchenpantry.infrastructure.persistence.jdbc.entity.BatchEntity;
 import org.jossegonnza.kitchenpantry.infrastructure.persistence.jdbc.entity.ProductEntity;
 import org.jossegonnza.kitchenpantry.infrastructure.persistence.jdbc.mapper.BatchMapper;
 import org.jossegonnza.kitchenpantry.infrastructure.persistence.jdbc.mapper.ProductMapper;
 import org.jossegonnza.kitchenpantry.infrastructure.persistence.jdbc.repository.SpringDataBatchRepository;
 import org.jossegonnza.kitchenpantry.infrastructure.persistence.jdbc.repository.SpringDataProductRepository;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +22,7 @@ import java.util.stream.StreamSupport;
 
 @Repository
 public class JdbcPantryRepository {
+    private static final Logger log = LogHelper.getLogger(JdbcPantryRepository.class);
     private final SpringDataProductRepository productRepository;
     private final SpringDataBatchRepository batchRepository;
 
@@ -33,11 +36,17 @@ public class JdbcPantryRepository {
 
     @Transactional
     public void saveProduct(Product product) {
+        log.debug("Attempting to save product: {}", product.getName());
+
         if (productRepository.existsByNameIgnoreCase(product.getName())) {
+            log.warn("Product already exists: {}", product.getName());
             throw new DuplicateProductException(product.getName());
         }
+
         ProductEntity entity = ProductMapper.toEntity(product, null);
         productRepository.save(entity);
+
+        log.info("Product saved successfully: {}", product.getName());
     }
 
     @Transactional(readOnly = true)
