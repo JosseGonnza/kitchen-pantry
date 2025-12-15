@@ -1,0 +1,29 @@
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/kitchen_pantry}
+    driver-class-name: org.postgresql.Driver
+    username: ${DATABASE_USER:postgres}
+    password: ${DATABASE_PASSWORD:postgres}
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      connection-timeout: 20000
+      idle-timeout: 300000
+      max-lifetime: 1200000
+
+  sql:
+    init:
+      mode: never
+
+logging:
+  level:
+    root: WARN
+    org.jossegonnza.kitchenpantry: INFO
+  file:
+    name: logs/kitchen-pantry.log
+    max-size: 10MB
+    max-history: 30
